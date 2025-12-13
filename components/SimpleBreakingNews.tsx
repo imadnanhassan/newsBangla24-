@@ -16,7 +16,7 @@ export default function SimpleBreakingNews() {
     <div className="bg-red-600 text-white py-4 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center shrink-0">
             <span className="text-red-600 font-bold text-xs">ব্রেকিং</span>
           </div>
           <h3 className="font-bold text-lg">ব্রেকিং নিউজ</h3>
@@ -28,7 +28,7 @@ export default function SimpleBreakingNews() {
             {breakingNews.map((article, index) => (
               <div
                 key={article.id}
-                className="flex items-center mx-4 flex-shrink-0"
+                className="flex items-center mx-4 shrink-0"
                 style={{ width: "300px" }}
               >
                 <div className="flex gap-3 items-center bg-white/10 p-2 rounded-lg">
@@ -38,7 +38,7 @@ export default function SimpleBreakingNews() {
                       "https://picsum.photos/80/60?random=1"
                     }
                     alt={article.title}
-                    className="w-20 h-15 object-cover rounded-md flex-shrink-0"
+                    className="w-20 h-15 object-cover rounded-md shrink-0"
                     width={80}
                     height={60}
                   />
@@ -59,7 +59,7 @@ export default function SimpleBreakingNews() {
             {breakingNews.map((article, index) => (
               <div
                 key={`dup-${article.id}`}
-                className="flex items-center mx-4 flex-shrink-0"
+                className="flex items-center mx-4 shrink-0"
                 style={{ width: "300px" }}
               >
                 <div className="flex gap-3 items-center bg-white/10 p-2 rounded-lg">
@@ -69,7 +69,7 @@ export default function SimpleBreakingNews() {
                       "https://picsum.photos/80/60?random=1"
                     }
                     alt={article.title}
-                    className="w-20 h-15 object-cover rounded-md flex-shrink-0"
+                    className="w-20 h-15 object-cover rounded-md shrink-0"
                     width={80}
                     height={60}
                   />

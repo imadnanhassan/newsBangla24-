@@ -42,12 +42,12 @@ export default function BreakingNewsSection() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-4 relative overflow-hidden">
+    <div className="bg-linear-to-r from-red-600 to-red-700 text-white py-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header with controls */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shrink-0">
               <span className="text-red-600 font-bold text-sm">ব্রেকিং</span>
             </div>
             <h2 className="text-xl font-bold">ব্রেকিং নিউজ</h2>
