@@ -1,15 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { categories } from "@/lib/data";
 
-export default function MainHeader() {
+export default function NewsPortalBaseHeader() {
   const [activeNav, setActiveNav] = useState("home");
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const submenuRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Current date in Bengali format
   const currentDate = new Date();
@@ -43,108 +40,53 @@ export default function MainHeader() {
     banglaMonths[currentDate.getMonth()]
   } ${currentDate.getFullYear()}`;
 
-  // Check if mobile device
+  // Check scroll position for header styling
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
     };
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close submenu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        submenuRef.current &&
-        !submenuRef.current.contains(event.target as Node)
-      ) {
-        setActiveSubmenu(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Main navigation items with submenus
+  // Main navigation items - core site sections
   const mainNavItems = [
     { id: "home", name: "হোম", path: "/" },
     { id: "latest", name: "সর্বশেষ", path: "/latest" },
-    { id: "popular", name: "জনপ্রিয়", path: "/popular" },
-    {
-      id: "news",
-      name: "সংবাদ",
-      path: "#",
-      submenu: [
-        { id: "politics", name: "রাজনীতি", path: "/categories/politics" },
-        { id: "business", name: "ব্যবসা", path: "/categories/business" },
-        { id: "world", name: "আন্তর্জাতিক", path: "/categories/world-news" },
-        { id: "country", name: "দেশ", path: "/categories/country-news" },
-      ],
-    },
-    {
-      id: "lifestyle",
-      name: "জীবনধারা",
-      path: "#",
-      submenu: [
-        { id: "health", name: "স্বাস্থ্য", path: "/categories/health" },
-        { id: "tech", name: "প্রযুক্তি", path: "/categories/tech" },
-        {
-          id: "entertainment",
-          name: "বিনোদন",
-          path: "/categories/entertainment",
-        },
-      ],
-    },
-    {
-      id: "sports",
-      name: "খেলা",
-      path: "/categories/sports",
-    },
-    { id: "opinion", name: "মতামত", path: "/opinion" },
+    { id: "about", name: "আমাদের সম্পর্কে", path: "/about" },
+    { id: "contact", name: "যোগাযোগ", path: "/contact" },
   ];
 
-  // Toggle submenu
-  const toggleSubmenu = (itemId: string) => {
-    if (activeSubmenu === itemId) {
-      setActiveSubmenu(null);
-    } else {
-      setActiveSubmenu(itemId);
-    }
-  };
-
-  // Close mobile menu when navigation item is clicked
-  const handleMobileNavClick = (itemId: string) => {
-    setActiveNav(itemId);
-    setShowMobileMenu(false);
-    setActiveSubmenu(null);
-  };
-
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white shadow-lg border-b border-gray-200"
+          : "bg-white/95 backdrop-blur-sm"
+      }`}
+    >
       {/* Top Header - Date and Social */}
-      <div className="bg-gray-50 border-b border-gray-200">
+      <div className="bg-linear-to-r from-red-50 to-red-100 border-b border-red-100">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
-          <div className="text-sm text-gray-600">{today}</div>
+          <div className="text-sm text-gray-700 font-medium">{today}</div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">৩২°সি, ঢাকা</span>
+            <span className="text-sm text-gray-700 font-medium">
+              ৩২°সি, ঢাকা
+            </span>
             <div className="flex gap-2">
-              <button className="text-gray-600 hover:text-red-600 transition-colors">
+              <button className="text-red-600 hover:text-red-800 transition-all duration-300 transform hover:scale-110">
                 <svg
-                  className="w-4 h-4"
+                  className="w-5 h-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                 </svg>
               </button>
-              <button className="text-gray-600 hover:text-red-600 transition-colors">
+              <button className="text-red-600 hover:text-red-800 transition-all duration-300 transform hover:scale-110">
                 <svg
-                  className="w-4 h-4"
+                  className="w-5 h-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -159,109 +101,55 @@ export default function MainHeader() {
       {/* Main Header - Logo and Navigation */}
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between py-4">
-          {/* New Logo Design - News Portal Style */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-white font-black text-2xl italic">N</span>
+          {/* Enhanced Logo Design */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-14 h-14 bg-linear-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center shadow-xl transform group-hover:scale-105 transition-transform duration-300">
+              <span className="text-white font-black text-3xl italic transform group-hover:rotate-12 transition-transform duration-300">
+                N
+              </span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">newsBangla24</h1>
-              <p className="text-xs text-gray-600">বাংলার খবর ২৪ ঘণ্টা</p>
+              <h1 className="text-3xl font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300">
+                newsBangla24
+              </h1>
+              <p className="text-xs text-gray-600 group-hover:text-red-500 transition-colors duration-300">
+                বাংলার খবর ২৪ ঘণ্টা
+              </p>
             </div>
           </Link>
 
-          {/* Main Navigation */}
-          <nav
-            className="hidden lg:flex items-center gap-1 relative"
-            ref={submenuRef}
-          >
+          {/* Modern Navigation Bar with Icons */}
+          <nav className="hidden lg:flex items-center gap-1 bg-white rounded-full px-2 py-1 shadow-sm border border-gray-100">
             {mainNavItems.map((item) => (
-              <div key={item.id} className="relative group">
-                {item.submenu ? (
-                  <>
-                    <button
-                      className={`px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1 hover:bg-red-50 ${
-                        activeNav === item.id
-                          ? "bg-red-600 text-white"
-                          : "text-gray-700"
-                      }`}
-                      onClick={() => toggleSubmenu(item.id)}
-                      onMouseEnter={() =>
-                        !isMobile && setActiveSubmenu(item.id)
-                      }
-                      onMouseLeave={() => !isMobile && setActiveSubmenu(null)}
-                    >
-                      {item.name}
-                      <svg
-                        className="w-3 h-3 ml-1 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </button>
-
-                    {/* Submenu Dropdown - Simplified and reliable */}
-                    <div
-                      className={`absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-50 ${
-                        activeSubmenu === item.id ? "block" : "hidden"
-                      }`}
-                    >
-                      <div className="py-1">
-                        {item.submenu.map((subItem) => (
-                          <Link
-                            key={subItem.id}
-                            href={subItem.path}
-                            className={`block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors ${
-                              activeNav === subItem.id
-                                ? "bg-red-50 text-red-600"
-                                : ""
-                            }`}
-                            onClick={() => {
-                              setActiveNav(subItem.id);
-                              setActiveSubmenu(null);
-                            }}
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    href={item.path}
-                    className={`px-4 py-2 text-sm font-medium transition-colors ${
-                      activeNav === item.id
-                        ? "bg-red-600 text-white"
-                        : "text-gray-700 hover:bg-red-50"
-                    }`}
-                    onClick={() => setActiveNav(item.id)}
-                  >
-                    {item.name}
-                  </Link>
+              <Link
+                key={item.id}
+                href={item.path}
+                className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center gap-1 relative group ${
+                  activeNav === item.id
+                    ? "bg-red-600 text-white shadow-md"
+                    : "text-gray-700 hover:bg-red-50 hover:text-red-600"
+                }`}
+                onClick={() => setActiveNav(item.id)}
+              >
+                <span>{item.name}</span>
+                {activeNav === item.id && (
+                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-600 rounded-full"></span>
                 )}
-              </div>
+              </Link>
             ))}
           </nav>
 
-          {/* Right Side - Search and Mobile Menu */}
+          {/* Right Side - Search */}
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-2">
               <input
                 type="text"
                 placeholder="খুঁজুন..."
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-300"
               />
-              <button className="bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors">
+              <button className="bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                 <svg
-                  className="w-4 h-4"
+                  className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -275,138 +163,25 @@ export default function MainHeader() {
                 </svg>
               </button>
             </div>
-            <button
-              className="lg:hidden p-2"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {showMobileMenu ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
           </div>
         </div>
       </div>
 
-      {/* Category Navigation */}
-      <div className="border-t border-gray-200 bg-white">
+      {/* Category Navigation - Below Main Header */}
+      <div className="border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center gap-1 py-2 overflow-x-auto no-scrollbar">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/categories/${category.slug}`}
-                className={`px-3 py-2 text-sm whitespace-nowrap transition-colors ${
-                  activeNav === category.slug
-                    ? "bg-red-600 text-white"
-                    : "text-gray-700 hover:bg-red-50"
-                }`}
-                onClick={() => setActiveNav(category.slug)}
-              >
-                {category.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu with Animation */}
-      <div
-        className={`lg:hidden bg-white border-t border-gray-200 overflow-hidden transition-all duration-300 ease-in-out ${
-          showMobileMenu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="space-y-2">
-            {mainNavItems.map((item) => (
-              <div key={item.id}>
-                {item.submenu ? (
-                  <>
-                    <button
-                      className={`flex items-center justify-between w-full px-4 py-3 text-sm font-medium transition-colors ${
-                        activeNav === item.id
-                          ? "bg-red-600 text-white"
-                          : "text-gray-700 hover:bg-red-50"
-                      }`}
-                      onClick={() => toggleSubmenu(item.id)}
-                    >
-                      {item.name}
-                      <svg
-                        className={`w-4 h-4 transition-transform ${
-                          activeSubmenu === item.id ? "rotate-180" : ""
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </button>
-
-                    {/* Mobile Submenu */}
-                    <div
-                      className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                        activeSubmenu === item.id
-                          ? "max-h-40 opacity-100"
-                          : "max-h-0 opacity-0"
-                      }`}
-                    >
-                      <div className="ml-4 mt-1 space-y-1">
-                        {item.submenu.map((subItem) => (
-                          <Link
-                            key={subItem.id}
-                            href={subItem.path}
-                            className={`block px-4 py-2 text-sm transition-colors ${
-                              activeNav === subItem.id
-                                ? "bg-red-600 text-white"
-                                : "text-gray-700 hover:bg-red-50"
-                            }`}
-                            onClick={() => handleMobileNavClick(subItem.id)}
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    href={item.path}
-                    className={`block px-4 py-3 text-sm font-medium transition-colors ${
-                      activeNav === item.id
-                        ? "bg-red-600 text-white"
-                        : "text-gray-700 hover:bg-red-50"
-                    }`}
-                    onClick={() => handleMobileNavClick(item.id)}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-              </div>
-            ))}
+          <div className="no-scrollbar -mx-4 overflow-x-auto px-4 py-3">
+            <div className="flex items-center gap-3">
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/categories/${category.slug}`}
+                  className="px-6 py-3 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all duration-300 shadow-sm hover:shadow-md whitespace-nowrap"
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

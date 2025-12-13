@@ -16,9 +16,10 @@ export type Article = {
   slug: string;
   excerpt: string;
   content?: string;
-  image?: string;
+  image_url?: string;
   category: Category;
   author?: Author;
+  reporter: Author;
   publishedAt?: string;
   videoUrl?: string; // Support for direct video URLs
   youtubeId?: string; // Support for YouTube video IDs

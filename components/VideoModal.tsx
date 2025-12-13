@@ -151,10 +151,10 @@ export default function VideoModal({
             {/* Video Player/Thumbnail Area */}
             <div className="flex-1 relative">
               {showThumbnail ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-linear-to-br from-gray-800 to-gray-900">
                   <div className="relative w-full h-full">
                     <Image
-                      src={currentVideo.image || "/placeholder.png"}
+                      src={currentVideo.image_url || "/placeholder.png"}
                       alt={currentVideo.title}
                       fill
                       className="object-cover opacity-80"
@@ -265,9 +265,9 @@ export default function VideoModal({
                   onClick={() => handleVideoClick(index)}
                 >
                   <div className="flex gap-3">
-                    <div className="relative aspect-video w-24 flex-shrink-0 rounded overflow-hidden">
+                    <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image
-                        src={video.image || "/placeholder.png"}
+                        src={video.image_url || "/placeholder.png"}
                         alt={video.title}
                         fill
                         className="object-cover"

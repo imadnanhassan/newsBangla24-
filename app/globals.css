@@ -77,7 +77,7 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
 .animation-paused {
@@ -411,5 +411,106 @@ html {
   }
   50% {
     transform: scale(1.02);
+  }
+}
+
+/* Enhanced header hover effects */
+.nav-item-hover::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item-hover:hover::after {
+  width: 100%;
+}
+
+/* Mobile menu improvements */
+@media (max-width: 1023px) {
+  .mobile-nav-enhanced {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  }
+
+  .mobile-nav-item {
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav-item:hover {
+    transform: translateX(5px);
+  }
+}
+
+/* Header scroll effects */
+.header-scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+}
+
+/* Enhanced button hover effects */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-enhanced:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Category navigation improvements */
+.category-nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #dc2626 #f1f1f1;
+}
+
+.category-nav-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.category-nav-scroll::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 10px;
+}
+
+.category-nav-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Responsive improvements for small devices */
+@media (max-width: 767px) {
+  .small-device-header {
+    padding: 0.5rem 0;
+  }
+
+  .small-device-logo {
+    gap: 0.5rem;
+  }
+
+  .small-device-logo h1 {
+    font-size: 1.25rem;
+  }
+
+  .small-device-logo p {
+    font-size: 0.65rem;
   }
 }

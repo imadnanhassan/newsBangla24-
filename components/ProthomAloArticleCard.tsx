@@ -59,7 +59,7 @@ export default function ProthomAloArticleCard({
         <div className={variant === "small" ? "flex gap-3" : "block"}>
           <div className={`relative overflow-hidden ${classes.image}`}>
             <Image
-              src={article.image || "/placeholder.png"}
+              src={article.image_url || "/placeholder.png"}
               alt={article.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"

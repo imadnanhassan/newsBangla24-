@@ -61,7 +61,7 @@ export default function ArticleSlider({
             <Link href={`/article/${article.slug}`} className="block">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
-                  src={article.image || "/placeholder.png"}
+                  src={article.image_url || "/placeholder.png"}
                   alt={article.title}
                   fill
                   className="object-cover"

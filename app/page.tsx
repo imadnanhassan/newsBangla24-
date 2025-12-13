@@ -5,6 +5,7 @@ import ArticleSlider from "@/components/ArticleSlider";
 import NewsPortalVideoSection from "@/components/NewsPortalVideoSection";
 import ImprovedMasonryGrid from "@/components/ImprovedMasonryGrid";
 import BangladeshSection from "@/components/BangladeshSection";
+import BreakingNewsSection from "@/components/BreakingNewsSection";
 
 export default function Home() {
   // Get featured articles for different sections
@@ -80,25 +81,8 @@ export default function Home() {
       {/* Section 3: News Portal Video Section */}
       <NewsPortalVideoSection videos={videoArticles} />
 
-      {/* Section 4: Additional Slider Section - Breaking News */}
-      <section>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800 border-l-4 border-red-600 pl-3">
-            ব্রেকিং নিউজ
-          </h2>
-          <Link
-            href="/categories/breaking-news"
-            className="text-red-600 hover:text-red-700 text-sm font-medium"
-          >
-            সব দেখুন →
-          </Link>
-        </div>
-        <ArticleSlider
-          articles={articles
-            .filter((a) => a.category.slug === "breaking-news")
-            .slice(0, 6)}
-        />
-      </section>
+      {/* Section 4: Breaking News Section with Improved Slider */}
+      <BreakingNewsSection />
 
       {/* Section 5: Improved Masonry Grid Section */}
       <ImprovedMasonryGrid

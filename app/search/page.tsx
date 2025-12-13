@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { articles } from "@/lib/data";
 import ArticleCard from "@/components/ArticleCard";
 import type { Article } from "@/types";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const [searchResults, setSearchResults] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,5 +59,13 @@ export default function SearchPage() {
         </section>
       )}
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div>Loading search...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 }

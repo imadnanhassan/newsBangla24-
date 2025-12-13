@@ -69,58 +69,50 @@ const sampleImages = [
   "https://picsum.photos/800/400?random=10",
 ];
 
-export const articles: Article[] = Array.from({ length: 40 }).map((_, i) => {
-  // Create URL-friendly slugs from titles
-  const createSlug = (title: string, index: number) => {
-    return (
-      title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
-        .replace(/\s+/g, "-") // Replace spaces with hyphens
-        .replace(/-+/g, "-") // Remove multiple hyphens
-        .substring(0, 50) + // Limit length
-      `-${index + 1}`
-    ); // Add unique identifier
-  };
+// Create URL-friendly slugs from titles
+const createSlug = (title: string, index: number) => {
+  return (
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/-+/g, "-") // Remove multiple hyphens
+      .substring(0, 50) + // Limit length
+    `-${index + 1}`
+  ); // Add unique identifier
+};
 
-  // Standardized slug format for all articles
-  const slug = createSlug(sampleTitles[i % sampleTitles.length], i);
+// More realistic excerpts based on category
+const getExcerptByCategory = (catSlug: string) => {
+  switch (catSlug) {
+    case "politics":
+      return "Government officials announced major policy changes that will impact citizens across the country. Experts weigh in on the potential consequences.";
+    case "business":
+      return "Financial markets reacted strongly to the latest economic developments. Analysts predict significant shifts in investment strategies.";
+    case "sports":
+      return "In a thrilling match, the national team secured victory against tough opponents. Fans celebrate the historic achievement.";
+    case "tech":
+      return "Cutting-edge technology breakthrough promises to revolutionize the industry. Companies race to implement the latest innovations.";
+    case "entertainment":
+      return "Celebrity news and entertainment updates from around the world. Get the latest on your favorite stars and upcoming events.";
+    case "breaking-news":
+      return "Urgent breaking news update with developing information. Stay tuned for more details as the situation unfolds.";
+    case "latest-news":
+      return "The most recent news updates covering various topics. Stay informed with our comprehensive news coverage.";
+    case "country-news":
+      return "Local news and developments from across the nation. Community leaders share their perspectives on current issues.";
+    case "world-news":
+      return "International news and global affairs updates. Diplomatic relations and worldwide events shaping our future.";
+    case "health":
+      return "Medical breakthroughs and health-related news. Experts provide insights on maintaining wellness and preventing diseases.";
+    default:
+      return "This is a detailed excerpt about the news article, providing key insights and information.";
+  }
+};
 
-  // Better category distribution - ensure each category gets roughly equal representation
-  const categoryIndex = Math.floor(i / 4) % categories.length;
-  const category = categories[categoryIndex];
-
-  // More realistic excerpts based on category
-  const getExcerptByCategory = (catSlug: string) => {
-    switch (catSlug) {
-      case "politics":
-        return "Government officials announced major policy changes that will impact citizens across the country. Experts weigh in on the potential consequences.";
-      case "business":
-        return "Financial markets reacted strongly to the latest economic developments. Analysts predict significant shifts in investment strategies.";
-      case "sports":
-        return "In a thrilling match, the national team secured victory against tough opponents. Fans celebrate the historic achievement.";
-      case "tech":
-        return "Cutting-edge technology breakthrough promises to revolutionize the industry. Companies race to implement the latest innovations.";
-      case "entertainment":
-        return "Celebrity news and entertainment updates from around the world. Get the latest on your favorite stars and upcoming events.";
-      case "breaking-news":
-        return "Urgent breaking news update with developing information. Stay tuned for more details as the situation unfolds.";
-      case "latest-news":
-        return "The most recent news updates covering various topics. Stay informed with our comprehensive news coverage.";
-      case "country-news":
-        return "Local news and developments from across the nation. Community leaders share their perspectives on current issues.";
-      case "world-news":
-        return "International news and global affairs updates. Diplomatic relations and worldwide events shaping our future.";
-      case "health":
-        return "Medical breakthroughs and health-related news. Experts provide insights on maintaining wellness and preventing diseases.";
-      default:
-        return "This is a detailed excerpt about the news article, providing key insights and information.";
-    }
-  };
-
-  // More detailed content based on category
-  const getContentByCategory = (catSlug: string, title: string) => {
-    return `## ${title}
+// More detailed content based on category
+const getContentByCategory = (catSlug: string, title: string) => {
+  return `## ${title}
 
 This is the full content of the news article. It provides detailed information about the topic, including background, analysis, and expert opinions.
 
@@ -143,34 +135,56 @@ Leading experts in the field have shared their perspectives on this development.
 This article concludes with a summary of the main points and potential future developments. As the situation continues to evolve, we will provide updates and additional analysis.
 
 Stay tuned for more news and in-depth coverage on this important topic.`;
-  };
+};
 
-  return {
-    id: String(i + 1),
-    title: sampleTitles[i % sampleTitles.length],
-    slug: slug,
-    excerpt: getExcerptByCategory(category.slug),
-    content: getContentByCategory(
-      category.slug,
-      sampleTitles[i % sampleTitles.length]
-    ),
-    image: sampleImages[i % sampleImages.length],
-    category: category,
-    author: {
-      id: String(Math.floor(Math.random() * 5) + 1),
-      name: [
-        "John Doe",
-        "Jane Smith",
-        "Mike Johnson",
-        "Sarah Williams",
-        "David Brown",
-      ][Math.floor(Math.random() * 5)],
-      avatar: `https://i.pravatar.cc/150?img=${
-        Math.floor(Math.random() * 70) + 1
-      }`,
-    },
-    publishedAt: new Date(
-      Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
-    ).toISOString(),
-  };
-});
+// Create articles organized by category
+export const articlesByCategory: Record<string, Article[]> = categories.reduce(
+  (acc, category) => {
+    // Create 4 articles per category
+    const categoryArticles = Array.from({ length: 4 }).map((_, i) => {
+      const articleIndex = categories.indexOf(category) * 4 + i;
+      const slug = createSlug(
+        sampleTitles[articleIndex % sampleTitles.length],
+        articleIndex
+      );
+
+      return {
+        id: String(articleIndex + 1),
+        title: sampleTitles[articleIndex % sampleTitles.length],
+        slug: slug,
+        excerpt: getExcerptByCategory(category.slug),
+        content: getContentByCategory(
+          category.slug,
+          sampleTitles[articleIndex % sampleTitles.length]
+        ),
+        image_url: sampleImages[articleIndex % sampleImages.length],
+        category: category,
+        author: {
+          id: String(Math.floor(Math.random() * 5) + 1),
+          name: [
+            "John Doe",
+            "Jane Smith",
+            "Mike Johnson",
+            "Sarah Williams",
+            "David Brown",
+          ][Math.floor(Math.random() * 5)],
+          avatar: `https://i.pravatar.cc/150?img=${
+            Math.floor(Math.random() * 70) + 1
+          }`,
+        },
+        publishedAt: new Date(
+          Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+      };
+    });
+
+    return {
+      ...acc,
+      [category.slug]: categoryArticles,
+    };
+  },
+  {}
+);
+
+// Flatten all articles for backward compatibility
+export const articles: Article[] = Object.values(articlesByCategory).flat();

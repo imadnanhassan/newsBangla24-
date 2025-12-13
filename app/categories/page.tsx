@@ -25,7 +25,7 @@ export default function Categories() {
             href={`/categories/${category.slug}`}
             className="group block rounded-lg overflow-hidden shadow-lg border border-red-600/10 hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative aspect-video bg-gradient-to-br from-red-600/10 to-red-800/20">
+            <div className="relative aspect-video bg-linear-to-br from-red-600/10 to-red-800/20">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-lg transform -rotate-12">
                   {category.name}

@@ -3,7 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MainHeader from "@/components/MainHeader";
 import MainFooter from "@/components/MainFooter";
-import BreakingNewsSection from "@/components/BreakingNewsSection";
+import SimpleBreakingNews from "@/components/SimpleBreakingNews";
+import { categories } from "@/lib/data";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +34,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <MainHeader />
-        <BreakingNewsSection />
+        {/* bracking news with marquree */}
+        <SimpleBreakingNews />
         <div className="mx-auto max-w-7xl px-4">{children}</div>
         <MainFooter />
       </body>

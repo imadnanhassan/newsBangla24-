@@ -128,9 +128,9 @@ export default function BangladeshSection({
               >
                 <Link href={`/article/${article.slug}`} className="block">
                   <div className="flex gap-3">
-                    <div className="relative aspect-video w-24 flex-shrink-0 rounded overflow-hidden">
+                    <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image
-                        src={article.image || "/placeholder.png"}
+                        src={article.image_url || "/placeholder.png"}
                         alt={article.title}
                         fill
                         className="object-cover transition-transform group-hover:scale-105"

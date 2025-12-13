@@ -6,10 +6,10 @@ export default function ArticleCard({ article }: { article: Article }) {
   return (
     <article className="group rounded-lg border border-border bg-card shadow-sm">
       <Link href={`/article/${article.slug}`} className="block">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-t-lg">
-          {article.image && (
+        <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
+          {article.image_url && (
             <Image
-              src={article.image}
+              src={article.image_url}
               alt={article.title}
               fill
               className="object-cover transition-transform group-hover:scale-105"
@@ -17,7 +17,9 @@ export default function ArticleCard({ article }: { article: Article }) {
           )}
         </div>
         <div className="space-y-2 p-4">
-          <div className="text-xs font-medium text-primary/80">{article.category.name}</div>
+          <div className="text-xs font-medium text-primary/80">
+            {article.category.name}
+          </div>
           <h3 className="line-clamp-2 text-lg font-semibold text-foreground">
             {article.title}
           </h3>
@@ -27,4 +29,3 @@ export default function ArticleCard({ article }: { article: Article }) {
     </article>
   );
 }
-

@@ -59,7 +59,7 @@ export default function NewsPortalVideoSection({
             <div className="lg:col-span-1">
               <div className="relative aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-red-600/20">
                 <Image
-                  src={videos[0].image || "/placeholder.png"}
+                  src={videos[0].image_url || "/placeholder.png"}
                   alt={videos[0].title}
                   fill
                   className="object-cover"
@@ -111,9 +111,9 @@ export default function NewsPortalVideoSection({
                   className="flex gap-3 border-b border-gray-200 pb-4 cursor-pointer group"
                   onClick={() => openVideoModal(index + 1)}
                 >
-                  <div className="relative aspect-video w-32 flex-shrink-0 rounded overflow-hidden">
+                  <div className="relative aspect-video w-32 shrink-0 rounded overflow-hidden">
                     <Image
-                      src={video.image || "/placeholder.png"}
+                      src={video.image_url || "/placeholder.png"}
                       alt={video.title}
                       fill
                       className="object-cover transition-transform group-hover:scale-105"
@@ -168,7 +168,7 @@ export default function NewsPortalVideoSection({
             >
               <div className="relative aspect-video bg-gray-200">
                 <Image
-                  src={video.image || "/placeholder.png"}
+                  src={video.image_url || "/placeholder.png"}
                   alt={video.title}
                   fill
                   className="object-cover transition-transform group-hover:scale-105"

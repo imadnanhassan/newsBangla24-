@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import CategoryNav from "@/components/CategoryNav";
 import ProthomAloArticleCard from "@/components/ProthomAloArticleCard";
-import { categories, articles } from "@/lib/data";
+import { categories, articles, articlesByCategory } from "@/lib/data";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -15,9 +15,7 @@ export default async function CategoryPage({ params }: PageProps) {
     notFound();
   }
 
-  const categoryArticles = articles.filter(
-    (a) => a.category.id === category.id
-  );
+  const categoryArticles = articlesByCategory[category.slug] || [];
 
   // Sort articles by date (newest first)
   const sortedArticles = [...categoryArticles].sort(
@@ -57,7 +55,7 @@ export default async function CategoryPage({ params }: PageProps) {
             <div className="lg:col-span-1">
               <div className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden shadow-lg border border-red-600/20">
                 <img
-                  src={featuredArticle.image || "/placeholder.png"}
+                  src={featuredArticle.image_url || "/placeholder.png"}
                   alt={featuredArticle.title}
                   className="w-full h-full object-cover"
                 />

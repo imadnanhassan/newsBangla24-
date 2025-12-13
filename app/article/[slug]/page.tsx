@@ -57,10 +57,10 @@ export default function ArticlePage({ params }: PageProps) {
               </header>
 
               {/* Featured Image */}
-              {article.image && (
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
+              {article.image_url && (
+                <div className="relative aspect-video w-full overflow-hidden rounded-lg">
                   <Image
-                    src={article.image}
+                    src={article.image_url}
                     alt={article.title}
                     fill
                     className="object-cover"
@@ -136,11 +136,11 @@ export default function ArticlePage({ params }: PageProps) {
                     key={newsArticle.id}
                     className="flex gap-3 border-b border-border pb-4 last:border-b-0"
                   >
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0">
                       <Link href={`/article/${newsArticle.slug}`}>
                         <div className="relative aspect-square w-20 overflow-hidden rounded-md">
                           <Image
-                            src={newsArticle.image || "/placeholder.png"}
+                            src={newsArticle.image_url || "/placeholder.png"}
                             alt={newsArticle.title}
                             fill
                             className="object-cover"

@@ -49,9 +49,9 @@ export default function ImprovedMasonryGrid({
           <div className="lg:col-span-1">
             <article className="group bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <Link href={`/article/${articles[0].slug}`} className="block">
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                <div className="relative aspect-4/3 w-full overflow-hidden">
                   <Image
-                    src={articles[0].image || "/placeholder.png"}
+                    src={articles[0].image_url || "/placeholder.png"}
                     alt={articles[0].title}
                     fill
                     className="object-cover transition-transform group-hover:scale-105"
@@ -93,7 +93,7 @@ export default function ImprovedMasonryGrid({
                 <Link href={`/article/${article.slug}`} className="block">
                   <div className="relative aspect-video w-full overflow-hidden">
                     <Image
-                      src={article.image || "/placeholder.png"}
+                      src={article.image_url || "/placeholder.png"}
                       alt={article.title}
                       fill
                       className="object-cover transition-transform group-hover:scale-105"
@@ -135,9 +135,9 @@ export default function ImprovedMasonryGrid({
               >
                 <Link href={`/article/${article.slug}`} className="block">
                   <div className="flex gap-3 p-3">
-                    <div className="relative aspect-video w-24 flex-shrink-0 rounded overflow-hidden">
+                    <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image
-                        src={article.image || "/placeholder.png"}
+                        src={article.image_url || "/placeholder.png"}
                         alt={article.title}
                         fill
                         className="object-cover transition-transform group-hover:scale-105"

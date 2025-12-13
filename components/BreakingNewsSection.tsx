@@ -5,95 +5,216 @@ import Link from "next/link";
 import { articles } from "@/lib/data";
 
 export default function BreakingNewsSection() {
-  const [isPaused, setIsPaused] = useState(false);
-  const marqueeRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const slideInterval = useRef<NodeJS.Timeout | null>(null);
 
   // Get breaking news articles
   const breakingNews = articles
     .filter((article) => article.category?.slug === "breaking-news")
-    .slice(0, 8); // Increased from 5 to 8 for better marquee effect
+    .slice(0, 5); // Get top 5 breaking news items
 
+  // Auto-play functionality
   useEffect(() => {
-    const marquee = marqueeRef.current;
-    if (!marquee) return;
-
-    const items = marquee.querySelectorAll("a");
-    if (items.length === 0) return;
-
-    let totalWidth = 0;
-    items.forEach((item: Element) => {
-      totalWidth += (item as HTMLElement).offsetWidth + 32; // 32px for gap-8 (Tailwind gap-8 = 2rem = 32px)
-    });
-
-    const duration = Math.max(20, totalWidth / 50); // 50px per second
-    marquee.style.animationDuration = `${duration}s`;
-
-    // Pause on hover
-    const handleMouseEnter = () => setIsPaused(true);
-    const handleMouseLeave = () => setIsPaused(false);
-
-    marquee.addEventListener("mouseenter", handleMouseEnter);
-    marquee.addEventListener("mouseleave", handleMouseLeave);
+    if (isAutoPlaying && breakingNews.length > 1) {
+      slideInterval.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % breakingNews.length);
+      }, 5000); // Change slide every 5 seconds
+    }
 
     return () => {
-      marquee.removeEventListener("mouseenter", handleMouseEnter);
-      marquee.removeEventListener("mouseleave", handleMouseLeave);
+      if (slideInterval.current) {
+        clearInterval(slideInterval.current);
+      }
     };
-  }, [breakingNews.length]);
+  }, [isAutoPlaying, breakingNews.length]);
 
   if (breakingNews.length === 0) return null;
 
+  // Format time for Bengali display
+  const formatBengaliTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString("bn-BD", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
   return (
-    <div className="bg-red-600 text-white py-3 overflow-hidden relative">
+    <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+        {/* Header with controls */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-red-600 font-bold text-sm">ব্রেকিং</span>
             </div>
-            <span className="font-semibold">ব্রেকিং নিউজ</span>
+            <h2 className="text-xl font-bold">ব্রেকিং নিউজ</h2>
           </div>
 
-          <div className="flex-1 overflow-hidden">
-            <div
-              ref={marqueeRef}
-              className={`flex gap-8 animate-marquee ${
-                isPaused ? "animation-paused" : ""
-              }`}
-              style={{
-                width: "fit-content",
-                animationPlayState: isPaused ? "paused" : "running",
-              }}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+              title={isAutoPlaying ? "পজ করুন" : "প্লে করুন"}
             >
-              {breakingNews.concat(breakingNews).map((article, index) => (
-                <Link
-                  key={`${article.id}-${index}`}
-                  href={`/article/${article.slug}`}
-                  className="flex items-center gap-3 whitespace-nowrap hover:underline transition-colors hover:font-semibold"
+              {isAutoPlaying ? (
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <span className="text-sm">{article.title}</span>
-                  <span className="text-xs opacity-75">
-                    {article.publishedAt
-                      ? new Date(article.publishedAt).toLocaleTimeString(
-                          "bn-BD",
-                          {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: true,
-                          }
-                        )
-                      : "সময় না পাওয়া"}
-                  </span>
-                </Link>
-              ))}
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                </svg>
+              ) : (
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </button>
+
+            <div className="flex gap-1">
+              <button
+                onClick={() => {
+                  setCurrentSlide(
+                    (prev) =>
+                      (prev - 1 + breakingNews.length) % breakingNews.length
+                  );
+                  setIsAutoPlaying(false);
+                }}
+                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors disabled:opacity-50"
+                disabled={currentSlide === 0}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+              </button>
+              <button
+                onClick={() => {
+                  setCurrentSlide((prev) => (prev + 1) % breakingNews.length);
+                  setIsAutoPlaying(false);
+                }}
+                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors disabled:opacity-50"
+                disabled={currentSlide === breakingNews.length - 1}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                </svg>
+              </button>
             </div>
           </div>
+        </div>
 
-          <button className="shrink-0 bg-white text-red-600 px-3 py-1 rounded text-sm font-medium hover:bg-gray-100 transition-colors">
-            সব ব্রেকিং →
-          </button>
+        {/* Slider container */}
+        <div className="relative">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {breakingNews.map((article, index) => (
+              <div key={article.id} className="w-full shrink-0 px-2">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="flex gap-4">
+                    <div className="shrink-0">
+                      <img
+                        src={
+                          article.image_url ||
+                          "https://picsum.photos/96/80?random=1"
+                        }
+                        alt={article.title}
+                        className="w-24 h-20 object-cover rounded-md"
+                        width={96}
+                        height={80}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <Link
+                        href={`/article/${article.slug}`}
+                        className="block hover:text-red-200 transition-colors"
+                      >
+                        <h3 className="font-semibold text-lg leading-tight line-clamp-2">
+                          {article.title}
+                        </h3>
+                      </Link>
+                      <p className="text-sm text-red-100 mt-1 line-clamp-2">
+                        {article.excerpt}
+                      </p>
+                      <div className="flex items-center gap-3 mt-2 text-xs">
+                        <span className="bg-red-500 px-2 py-1 rounded">
+                          {article.category?.name}
+                        </span>
+                        <span className="opacity-80">
+                          {article.publishedAt
+                            ? formatBengaliTime(article.publishedAt)
+                            : "সময় না পাওয়া"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Slide indicators */}
+          <div className="flex justify-center gap-2 mt-4">
+            {breakingNews.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setCurrentSlide(index);
+                  setIsAutoPlaying(false);
+                }}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  currentSlide === index
+                    ? "bg-white w-6"
+                    : "bg-white/50 hover:bg-white/75"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* View all button */}
+        <div className="mt-3 text-right">
+          <Link
+            href="/categories/breaking-news"
+            className="inline-flex items-center gap-2 bg-white text-red-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+          >
+            সব ব্রেকিং নিউজ
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Link>
         </div>
       </div>
+
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-32 h-full bg-white/5 opacity-50 -skew-x-12 -ml-16"></div>
+      <div className="absolute top-0 right-0 w-32 h-full bg-white/5 opacity-50 skew-x-12 -mr-16"></div>
     </div>
   );
 }
