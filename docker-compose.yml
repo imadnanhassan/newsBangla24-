@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  newsportal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    restart: unless-stopped
+
+  # Development database (optional)
+  # Uncomment if you need a database for your news portal
+  # postgres:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_USER: newsportal
+  #     POSTGRES_PASSWORD: newsportal123
+  #     POSTGRES_DB: newsportal_db
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+# volumes:
+#   postgres_data:

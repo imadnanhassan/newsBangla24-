@@ -141,8 +141,42 @@ The project is configured for multiple deployment options:
 
 3. **Docker**:
 
-   - Use the `standalone` output for containerized deployment
-   - Build with `docker build -t newsportal .`
+   **Development Setup:**
+
+   ```bash
+   # Start development environment
+   docker-compose up --build
+
+   # Access at http://localhost:3000
+   # Stop with Ctrl+C or:
+   docker-compose down
+   ```
+
+   **Production Deployment:**
+
+   ```bash
+   # Build production image
+   docker build -t newsportal:production --target runner .
+
+   # Run production container
+   docker run -p 3000:3000 -d --env NODE_ENV=production newsportal:production
+
+   # With environment variables
+   docker run -p 3000:3000 -d \
+     --env NODE_ENV=production \
+     --env NEXT_PUBLIC_API_URL=/api \
+     newsportal:production
+   ```
+
+   **Quick Start:**
+
+   ```bash
+   # Build and run
+   docker build -t newsportal .
+   docker run -p 3000:3000 -d newsportal
+   ```
+
+   For detailed Docker setup instructions, see [DOCKER_GUIDE.md](DOCKER_GUIDE.md)
 
 4. **Node.js Server**:
    - Standard Next.js deployment with `next build && next start`
