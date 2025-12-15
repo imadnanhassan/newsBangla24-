@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import Link from 'next/link';
 import { useState } from 'react';
 import { 
@@ -20,6 +19,7 @@ import {
   FileText,
   MoreVertical
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface MediaItem {
   id: number;

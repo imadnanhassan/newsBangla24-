@@ -9,12 +9,9 @@ import {
   MessageSquare, 
   Eye, 
   Clock, 
-  Star,
-  TrendingUp,
   Bell,
   Settings,
   User,
-  Calendar,
   Share2
 } from 'lucide-react';
 

@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import { useState } from 'react';
 import { 
   Bell,
@@ -17,6 +16,7 @@ import {
   Filter,
   MoreVertical
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface Notification {
   id: number;

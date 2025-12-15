@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import { useState } from 'react';
 import { 
   TrendingUp,
@@ -19,6 +18,7 @@ import {
   Monitor,
   Tablet
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface AnalyticsData {
   totalViews: number;

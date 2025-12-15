@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import Link from 'next/link';
 import { useState } from 'react';
 import { 
@@ -19,6 +18,7 @@ import {
   Tag,
   Globe
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface ArticleForm {
   title: string;

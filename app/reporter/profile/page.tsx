@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import { useState, useEffect } from 'react';
 import { ClientSession, SessionUser } from '@/lib/session';
 import { 
@@ -22,6 +21,7 @@ import {
   Globe,
   Link as LinkIcon
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface ProfileData {
   name: string;

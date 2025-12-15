@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ClientSession, SessionUser } from '@/lib/session';
+import { ClientSession } from '@/lib/session';
 import ReporterSidebar from './ReporterSidebar';
 import { 
   Bell, 
@@ -15,6 +15,7 @@ import {
   Maximize2,
   Minimize2
 } from 'lucide-react';
+import type { SessionUser } from '@/types';
 
 interface ReporterLayoutProps {
   children: React.ReactNode;

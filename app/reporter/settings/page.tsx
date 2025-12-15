@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import { useState } from 'react';
 import { 
   Settings,
@@ -21,6 +20,7 @@ import {
   Database,
   HelpCircle
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface SettingsData {
   // Profile Settings

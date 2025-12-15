@@ -1,6 +1,5 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
 import { useState } from 'react';
 import { 
   Calendar as CalendarIcon,
@@ -17,6 +16,7 @@ import {
   Trash2,
   Eye
 } from 'lucide-react';
+import { ReporterLayout } from '@/components/reporter/layout';
 
 interface Event {
   id: number;

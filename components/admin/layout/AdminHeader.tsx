@@ -12,10 +12,22 @@ import {
   LogOut,
   FileText
 } from 'lucide-react';
+import { ClientSession } from '@/lib/session';
+import type { SessionUser } from '@/types';
 
-const AdminHeader = () => {
+interface AdminHeaderProps {
+  title?: string;
+  user: SessionUser;
+}
+
+export default function AdminHeader({ title, user }: AdminHeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+
+  const handleLogout = () => {
+    ClientSession.clearSession();
+    window.location.href = '/login';
+  };
 
   const notifications = [
     { id: 1, title: 'New article submitted', time: '2 min ago', type: 'info' },
@@ -26,8 +38,20 @@ const AdminHeader = () => {
   return (
     <header className="bg-white border-b border-gray-200 px-4 lg:px-6 py-4 shadow-sm">
       <div className="flex items-center justify-between ml-12 lg:ml-0">
+        {/* Title Section */}
+        <div className="flex-1">
+          <div className="flex items-center space-x-4">
+            {title && (
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
+                <p className="text-sm text-slate-500 font-medium">Admin Control Panel</p>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Search Bar */}
-        <div className="flex-1 max-w-md hidden md:block">
+        <div className="flex-1 max-w-md hidden md:block mx-8">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
@@ -99,7 +123,7 @@ const AdminHeader = () => {
                 <User className="w-5 h-5 text-white" />
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-gray-900">Admin User</p>
+                <p className="text-sm font-medium text-gray-900">{user.name}</p>
                 <p className="text-xs text-gray-500">Super Admin</p>
               </div>
               <ChevronDown className="w-4 h-4 text-gray-400" />
@@ -122,18 +146,30 @@ const AdminHeader = () => {
                     Help & Support
                   </a>
                   <div className="border-t border-gray-100 my-1"></div>
-                  <a href="#" className="flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                  <button 
+                    onClick={handleLogout}
+                    className="w-full flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  >
                     <LogOut className="w-4 h-4 mr-3" />
                     Sign Out
-                  </a>
+                  </button>
                 </div>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Click outside to close dropdowns */}
+      {(showNotifications || showProfile) && (
+        <div 
+          className="fixed inset-0 z-30" 
+          onClick={() => {
+            setShowNotifications(false);
+            setShowProfile(false);
+          }}
+        />
+      )}
     </header>
   );
-};
-
-export default AdminHeader;
+}

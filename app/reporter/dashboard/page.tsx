@@ -1,6 +1,7 @@
 'use client';
 
-import ReporterLayout from '@/components/ReporterLayout';
+import { ReporterLayout } from '@/components/reporter/layout';
+import { StatsCard, QuickActionCard } from '@/components/reporter/dashboard';
 import Link from 'next/link';
 import { 
   FileText, 
@@ -98,87 +99,41 @@ export default function ReporterDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => {
-            const IconComponent = stat.icon;
-            return (
-              <div key={index} className="group relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComponent className="w-7 h-7 text-white" />
-                    </div>
-                    <div className="text-right">
-                      <p className="text-3xl font-bold text-slate-900">{stat.value}</p>
-                      <p className="text-sm font-medium text-slate-600">{stat.title}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <TrendingUp className="w-4 h-4 text-green-500" />
-                    <span className="text-sm font-semibold text-green-600">{stat.change}</span>
-                    <span className="text-sm text-slate-500">গত সপ্তাহের তুলনায়</span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {stats.map((stat, index) => (
+            <StatsCard
+              key={index}
+              title={stat.title}
+              value={stat.value}
+              change={stat.change}
+              icon={stat.icon}
+              color={stat.color}
+            />
+          ))}
         </div>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/reporter/articles/create" className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 block overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
-                  <Plus className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">নতুন নিবন্ধ</h3>
-                  <p className="text-slate-600 font-medium">নতুন সংবাদ লিখুন</p>
-                </div>
-              </div>
-              <div className="text-sm text-slate-500">
-                আপনার পরবর্তী গুরুত্বপূর্ণ সংবাদ তৈরি করুন
-              </div>
-            </div>
-          </Link>
-
-          <Link href="/reporter/media/upload" className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 block overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-green-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
-                  <Camera className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-green-600 transition-colors">ছবি আপলোড</h3>
-                  <p className="text-slate-600 font-medium">মিডিয়া যোগ করুন</p>
-                </div>
-              </div>
-              <div className="text-sm text-slate-500">
-                আপনার সংবাদের জন্য ছবি ও ভিডিও আপলোড করুন
-              </div>
-            </div>
-          </Link>
-
-          <Link href="/reporter/media/videos" className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 block overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
-                  <Video className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">ভিডিও রিপোর্ট</h3>
-                  <p className="text-slate-600 font-medium">ভিডিও সংবাদ</p>
-                </div>
-              </div>
-              <div className="text-sm text-slate-500">
-                ভিডিও রিপোর্ট তৈরি ও সম্পাদনা করুন
-              </div>
-            </div>
-          </Link>
+          <QuickActionCard
+            title="নতুন নিবন্ধ"
+            description="নতুন সংবাদ লিখুন"
+            href="/reporter/articles/create"
+            icon={Plus}
+            color="from-blue-500 to-blue-600"
+          />
+          <QuickActionCard
+            title="ছবি আপলোড"
+            description="মিডিয়া যোগ করুন"
+            href="/reporter/media/upload"
+            icon={Camera}
+            color="from-green-500 to-green-600"
+          />
+          <QuickActionCard
+            title="ভিডিও রিপোর্ট"
+            description="ভিডিও সংবাদ"
+            href="/reporter/media/videos"
+            icon={Video}
+            color="from-purple-500 to-purple-600"
+          />
         </div>
 
         {/* My Articles */}
