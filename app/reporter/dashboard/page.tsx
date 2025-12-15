@@ -1,56 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { ClientSession } from '@/lib/session';
-import { SessionUser } from '@/lib/session';
+import ReporterLayout from '@/components/ReporterLayout';
+import Link from 'next/link';
 import { 
   FileText, 
   Camera, 
   Video, 
-  BarChart3, 
-  Clock, 
-  CheckCircle, 
-  AlertCircle,
+  CheckCircle,
   Plus,
   Eye,
   MessageSquare,
-  Calendar,
-  Upload,
   Edit,
-  Save
+  TrendingUp,
+  Award
 } from 'lucide-react';
 
 export default function ReporterDashboard() {
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const sessionUser = ClientSession.getSession();
-    setUser(sessionUser);
-    setIsLoading(false);
-
-    // Redirect if not reporter
-    if (sessionUser && !['reporter'].includes(sessionUser.role)) {
-      window.location.href = '/login';
-    }
-  }, []);
-
-  const handleLogout = () => {
-    ClientSession.clearSession();
-    window.location.href = '/login';
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-600"></div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
 
   const myArticles = [
     {
@@ -114,50 +79,45 @@ export default function ReporterDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">নিউজ</span>
-              </div>
-              <h1 className="ml-3 text-xl font-semibold text-gray-900">রিপোর্টার ড্যাশবোর্ড</h1>
+    <ReporterLayout title="ড্যাশবোর্ড">
+      <div className="space-y-8">
+        {/* Welcome Section */}
+        <div className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 rounded-2xl p-8 text-white shadow-2xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">স্বাগতম, রিপোর্টার!</h2>
+              <p className="text-red-100 text-lg">আজ আপনার সংবাদ জগতে নতুন কিছু তৈরি করুন</p>
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">স্বাগতম, {user.name}</span>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              >
-                লগআউট
-              </button>
+            <div className="hidden md:block">
+              <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <Award className="w-12 h-12 text-white" />
+              </div>
             </div>
           </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm border">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+              <div key={index} className="group relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <p className="text-3xl font-bold text-slate-900">{stat.value}</p>
+                      <p className="text-sm font-medium text-slate-600">{stat.title}</p>
+                    </div>
                   </div>
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
-                    <IconComponent className="w-6 h-6 text-white" />
+                  <div className="flex items-center space-x-2">
+                    <TrendingUp className="w-4 h-4 text-green-500" />
+                    <span className="text-sm font-semibold text-green-600">{stat.change}</span>
+                    <span className="text-sm text-slate-500">গত সপ্তাহের তুলনায়</span>
                   </div>
-                </div>
-                <div className="mt-3 flex items-center">
-                  <span className="text-sm font-medium text-green-600">{stat.change}</span>
-                  <span className="text-sm text-gray-500 ml-1">গত সপ্তাহের তুলনায়</span>
                 </div>
               </div>
             );
@@ -165,86 +125,112 @@ export default function ReporterDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <button className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-all group">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Plus className="w-6 h-6 text-white" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Link href="/reporter/articles/create" className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 block overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+                  <Plus className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">নতুন নিবন্ধ</h3>
+                  <p className="text-slate-600 font-medium">নতুন সংবাদ লিখুন</p>
+                </div>
               </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900">নতুন নিবন্ধ</h3>
-                <p className="text-sm text-gray-600">নতুন সংবাদ লিখুন</p>
+              <div className="text-sm text-slate-500">
+                আপনার পরবর্তী গুরুত্বপূর্ণ সংবাদ তৈরি করুন
               </div>
             </div>
-          </button>
+          </Link>
 
-          <button className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-all group">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Camera className="w-6 h-6 text-white" />
+          <Link href="/reporter/media/upload" className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 block overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-green-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+                  <Camera className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-green-600 transition-colors">ছবি আপলোড</h3>
+                  <p className="text-slate-600 font-medium">মিডিয়া যোগ করুন</p>
+                </div>
               </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900">ছবি আপলোড</h3>
-                <p className="text-sm text-gray-600">মিডিয়া যোগ করুন</p>
+              <div className="text-sm text-slate-500">
+                আপনার সংবাদের জন্য ছবি ও ভিডিও আপলোড করুন
               </div>
             </div>
-          </button>
+          </Link>
 
-          <button className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-all group">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Video className="w-6 h-6 text-white" />
+          <Link href="/reporter/media/videos" className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 block overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+                  <Video className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">ভিডিও রিপোর্ট</h3>
+                  <p className="text-slate-600 font-medium">ভিডিও সংবাদ</p>
+                </div>
               </div>
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900">ভিডিও রিপোর্ট</h3>
-                <p className="text-sm text-gray-600">ভিডিও সংবাদ</p>
+              <div className="text-sm text-slate-500">
+                ভিডিও রিপোর্ট তৈরি ও সম্পাদনা করুন
               </div>
             </div>
-          </button>
+          </Link>
         </div>
 
         {/* My Articles */}
-        <div className="bg-white rounded-lg shadow-sm border">
-          <div className="px-6 py-4 border-b border-gray-200">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/50">
+          <div className="px-8 py-6 border-b border-slate-200/50">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900">আমার নিবন্ধসমূহ</h3>
-              <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">আমার নিবন্ধসমূহ</h3>
+                <p className="text-slate-600 font-medium">সাম্প্রতিক প্রকাশিত সংবাদ</p>
+              </div>
+              <Link href="/reporter/articles" className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium shadow-lg">
                 সব দেখুন
-              </button>
+              </Link>
             </div>
           </div>
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-slate-200/50">
             {myArticles.map((article) => (
-              <div key={article.id} className="p-6 hover:bg-gray-50 transition-colors">
+              <div key={article.id} className="p-8 hover:bg-slate-50/50 transition-all duration-200 group">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="text-sm font-medium text-gray-900 mb-2">{article.title}</h4>
-                    <div className="flex items-center space-x-4 text-xs text-gray-500">
-                      <span className="bg-gray-100 px-2 py-1 rounded">{article.category}</span>
-                      <span>{article.date}</span>
+                    <h4 className="text-lg font-semibold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{article.title}</h4>
+                    <div className="flex items-center space-x-4 text-sm text-slate-500 mb-3">
+                      <span className="bg-gradient-to-r from-slate-100 to-slate-200 px-3 py-1 rounded-full font-medium">{article.category}</span>
+                      <span className="flex items-center space-x-1">
+                        <div className="w-1 h-1 bg-slate-400 rounded-full"></div>
+                        <span>{article.date}</span>
+                      </span>
                     </div>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-1">
-                        <Eye className="w-4 h-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{article.views}</span>
+                    <div className="flex items-center space-x-6">
+                      <div className="flex items-center space-x-2">
+                        <Eye className="w-4 h-4 text-blue-500" />
+                        <span className="text-sm font-semibold text-slate-700">{article.views}</span>
+                        <span className="text-xs text-slate-500">ভিউ</span>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <MessageSquare className="w-4 h-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{article.comments}</span>
+                      <div className="flex items-center space-x-2">
+                        <MessageSquare className="w-4 h-4 text-green-500" />
+                        <span className="text-sm font-semibold text-slate-700">{article.comments}</span>
+                        <span className="text-xs text-slate-500">মন্তব্য</span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
-                      article.status === 'Published' ? 'bg-green-100 text-green-800' :
-                      article.status === 'Draft' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-blue-100 text-blue-800'
+                  <div className="flex items-center space-x-4">
+                    <span className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl ${
+                      article.status === 'Published' ? 'bg-green-100 text-green-700 border border-green-200' :
+                      article.status === 'Draft' ? 'bg-amber-100 text-amber-700 border border-amber-200' :
+                      'bg-blue-100 text-blue-700 border border-blue-200'
                     }`}>
-                      {article.status === 'Published' ? 'প্রকাশিত' :
-                       article.status === 'Draft' ? 'খসড়া' : 'পর্যালোচনায়'}
+                      {article.status === 'Published' ? '✓ প্রকাশিত' :
+                       article.status === 'Draft' ? '📝 খসড়া' : '⏳ পর্যালোচনায়'}
                     </span>
-                    <button className="text-gray-400 hover:text-blue-600">
-                      <Edit className="w-4 h-4" />
+                    <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200">
+                      <Edit className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -254,28 +240,66 @@ export default function ReporterDashboard() {
         </div>
 
         {/* Performance Chart */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">সাপ্তাহিক পারফরম্যান্স</h3>
-          <div className="h-48 flex items-end justify-between space-x-2">
-            {[45, 62, 38, 75, 89, 56, 67].map((height, index) => (
-              <div 
-                key={index} 
-                className="flex-1 bg-gradient-to-t from-red-500 to-red-400 rounded-t-lg hover:from-red-600 hover:to-red-500 transition-all duration-300 cursor-pointer" 
-                style={{ height: `${height}%` }}
-              ></div>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/50 p-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h3 className="text-2xl font-bold text-slate-900">সাপ্তাহিক পারফরম্যান্স</h3>
+              <p className="text-slate-600 font-medium">আপনার সংবাদের পাঠক সংখ্যা</p>
+            </div>
+            <div className="flex items-center space-x-2 text-sm">
+              <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-red-600 rounded-full"></div>
+              <span className="text-slate-600 font-medium">দৈনিক ভিউ</span>
+            </div>
+          </div>
+          
+          <div className="h-64 flex items-end justify-between space-x-3">
+            {[
+              { height: 45, day: 'সোম', value: '2.1K' },
+              { height: 62, day: 'মঙ্গল', value: '3.2K' },
+              { height: 38, day: 'বুধ', value: '1.8K' },
+              { height: 75, day: 'বৃহ', value: '4.1K' },
+              { height: 89, day: 'শুক্র', value: '5.2K' },
+              { height: 56, day: 'শনি', value: '2.9K' },
+              { height: 67, day: 'রবি', value: '3.7K' }
+            ].map((item, index) => (
+              <div key={index} className="flex-1 flex flex-col items-center group">
+                <div className="relative w-full flex items-end justify-center mb-2">
+                  <div 
+                    className="w-full bg-gradient-to-t from-red-500 via-red-400 to-red-300 rounded-t-2xl hover:from-red-600 hover:via-red-500 hover:to-red-400 transition-all duration-500 cursor-pointer shadow-lg group-hover:shadow-xl relative overflow-hidden" 
+                    style={{ height: `${item.height * 2}px` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  <div className="absolute -top-8 bg-slate-900 text-white px-2 py-1 rounded-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-200 transform -translate-y-1 group-hover:translate-y-0">
+                    {item.value}
+                  </div>
+                </div>
+                <span className="text-sm font-semibold text-slate-600 group-hover:text-slate-900 transition-colors">{item.day}</span>
+              </div>
             ))}
           </div>
-          <div className="flex justify-between text-xs text-gray-500 mt-3">
-            <span>সোম</span>
-            <span>মঙ্গল</span>
-            <span>বুধ</span>
-            <span>বৃহ</span>
-            <span>শুক্র</span>
-            <span>শনি</span>
-            <span>রবি</span>
+          
+          <div className="mt-6 pt-6 border-t border-slate-200/50">
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                  <span className="text-slate-600">গড় বৃদ্ধি:</span>
+                  <span className="font-bold text-green-600">+12.5%</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Eye className="w-4 h-4 text-blue-500" />
+                  <span className="text-slate-600">মোট ভিউ:</span>
+                  <span className="font-bold text-slate-900">23.0K</span>
+                </div>
+              </div>
+              <Link href="/reporter/analytics" className="text-blue-600 hover:text-blue-700 font-semibold">
+                বিস্তারিত দেখুন →
+              </Link>
+            </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </ReporterLayout>
   );
 }
