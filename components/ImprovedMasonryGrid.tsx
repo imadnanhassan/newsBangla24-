@@ -48,7 +48,7 @@ export default function ImprovedMasonryGrid({
           {/* First column - large featured article */}
           <div className="lg:col-span-1">
             <article className="group bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-              <Link href={`/article/${articles[0].slug}`} className="block">
+              <Link href={`/article/${articles[0].id}`} className="block">
                 <div className="relative aspect-4/3 w-full overflow-hidden">
                   <Image
                     src={articles[0].image_url || "/placeholder.png"}
@@ -90,7 +90,7 @@ export default function ImprovedMasonryGrid({
                 key={article.id}
                 className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all"
               >
-                <Link href={`/article/${article.slug}`} className="block">
+                <Link href={`/article/${article.id}`} className="block">
                   <div className="relative aspect-video w-full overflow-hidden">
                     <Image
                       src={article.image_url || "/placeholder.png"}
@@ -133,7 +133,7 @@ export default function ImprovedMasonryGrid({
                 key={article.id}
                 className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-all"
               >
-                <Link href={`/article/${article.slug}`} className="block">
+                <Link href={`/article/${article.id}`} className="block">
                   <div className="flex gap-3 p-3">
                     <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image

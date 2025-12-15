@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { articles } from "@/lib/data";
 
 export default function SimpleBreakingNews() {
-  // Get breaking news articles
   const breakingNews = articles
     .filter((article) => article.category?.slug === "breaking-news")
-    .slice(0, 8); // Get top 8 breaking news items for marquee
+    .slice(0, 8);
 
   if (breakingNews.length === 0) return null;
 
@@ -44,7 +42,7 @@ export default function SimpleBreakingNews() {
                   />
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/article/${article.slug}`}
+                      href={`/article/${article.id}`}
                       className="hover:text-red-200 transition-colors"
                     >
                       <h4 className="font-semibold text-sm leading-tight line-clamp-2">
@@ -75,7 +73,7 @@ export default function SimpleBreakingNews() {
                   />
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/article/${article.slug}`}
+                      href={`/article/${article.id}`}
                       className="hover:text-red-200 transition-colors"
                     >
                       <h4 className="font-semibold text-sm leading-tight line-clamp-2">

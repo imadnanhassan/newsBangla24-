@@ -21,6 +21,6 @@ export type Article = {
   author?: Author;
   reporter: Author;
   publishedAt?: string;
-  videoUrl?: string; // Support for direct video URLs
-  youtubeId?: string; // Support for YouTube video IDs
+  videoUrl?: string; 
+  youtubeId?: string; 
 };

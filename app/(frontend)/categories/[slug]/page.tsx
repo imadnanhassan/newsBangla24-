@@ -81,7 +81,7 @@ export default async function CategoryPage({ params }: PageProps) {
                     {featuredArticle.excerpt}
                   </p>
                   <a
-                    href={`/article/${featuredArticle.slug}`}
+                    href={`/article/${featuredArticle.id}`}
                     className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors w-fit"
                   >
                     <span>পড়ুন</span>

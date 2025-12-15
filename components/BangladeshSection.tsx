@@ -126,7 +126,7 @@ export default function BangladeshSection({
                 key={article.id}
                 className="group border-b border-gray-200 pb-4 hover:shadow-sm transition-all"
               >
-                <Link href={`/article/${article.slug}`} className="block">
+                <Link href={`/article/${article.id}`} className="block">
                   <div className="flex gap-3">
                     <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image

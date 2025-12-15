@@ -7,12 +7,12 @@ import ArticleCard from "@/components/ArticleCard";
 
 interface PageProps {
   params: {
-    slug: string;
+    id: string;
   };
 }
 
 export default function ArticlePage({ params }: PageProps) {
-  const article = articles.find((a) => a.slug === params.slug);
+  const article = articles.find((a) => a.id === params.id);
 
   if (!article) {
     notFound();
@@ -137,7 +137,7 @@ export default function ArticlePage({ params }: PageProps) {
                     className="flex gap-3 border-b border-border pb-4 last:border-b-0"
                   >
                     <div className="shrink-0">
-                      <Link href={`/article/${newsArticle.slug}`}>
+                      <Link href={`/article/${newsArticle.id}`}>
                         <div className="relative aspect-square w-20 overflow-hidden rounded-md">
                           <Image
                             src={newsArticle.image_url || "/placeholder.png"}
@@ -152,7 +152,7 @@ export default function ArticlePage({ params }: PageProps) {
                       <div className="text-xs text-primary/80 mb-1">
                         {newsArticle.category.name}
                       </div>
-                      <Link href={`/article/${newsArticle.slug}`}>
+                      <Link href={`/article/${newsArticle.id}`}>
                         <h4 className="font-medium text-sm line-clamp-2 hover:text-primary transition-colors">
                           {newsArticle.title}
                         </h4>

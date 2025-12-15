@@ -260,6 +260,117 @@ html {
   background: #b91c1c;
 }
 
+/* Custom border width classes */
+.border-3 {
+  border-width: 3px;
+}
+
+.border-t-3 {
+  border-top-width: 3px;
+}
+
+.border-b-3 {
+  border-bottom-width: 3px;
+}
+
+.border-l-3 {
+  border-left-width: 3px;
+}
+
+.border-r-3 {
+  border-right-width: 3px;
+}
+
+/* Remove all shadows for clean aesthetic */
+.shadow-none {
+  box-shadow: none !important;
+}
+
+/* Clean card design without shadows */
+.clean-card {
+  background: white;
+  border-radius: 1rem;
+  border: 3px solid #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.clean-card:hover {
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+/* Premium gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.gradient-green {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.gradient-orange {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+/* React Quill Editor Styling */
+.ql-editor {
+  min-height: 200px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.ql-toolbar {
+  border-top: 2px solid #f3f4f6 !important;
+  border-left: 2px solid #f3f4f6 !important;
+  border-right: 2px solid #f3f4f6 !important;
+  border-bottom: none !important;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.ql-container {
+  border-bottom: 2px solid #f3f4f6 !important;
+  border-left: 2px solid #f3f4f6 !important;
+  border-right: 2px solid #f3f4f6 !important;
+  border-top: none !important;
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.ql-toolbar:hover,
+.ql-container:hover {
+  border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+.ql-toolbar .ql-stroke {
+  stroke: #6b7280;
+}
+
+.ql-toolbar .ql-fill {
+  fill: #6b7280;
+}
+
+.ql-toolbar .ql-picker-label {
+  color: #6b7280;
+}
+
+.ql-toolbar button:hover .ql-stroke,
+.ql-toolbar button:focus .ql-stroke,
+.ql-toolbar button.ql-active .ql-stroke {
+  stroke: #dc2626;
+}
+
+.ql-toolbar button:hover .ql-fill,
+.ql-toolbar button:focus .ql-fill,
+.ql-toolbar button.ql-active .ql-fill {
+  fill: #dc2626;
+}
+
 /* Animation for loading states */
 @keyframes pulse {
   0%,

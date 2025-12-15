@@ -58,7 +58,7 @@ export default function ArticleSlider({
       >
         {articles.map((article, index) => (
           <div key={index} className="w-full shrink-0">
-            <Link href={`/article/${article.slug}`} className="block">
+            <Link href={`/article/${article.id}`} className="block">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src={article.image_url || "/placeholder.png"}

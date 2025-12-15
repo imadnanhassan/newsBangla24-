@@ -55,7 +55,7 @@ export default function ProthomAloArticleCard({
     <article
       className={`group border-b border-gray-200 pb-4 ${classes.container}`}
     >
-      <Link href={`/article/${article.slug}`} className="block">
+      <Link href={`/article/${article.id}`} className="block">
         <div className={variant === "small" ? "flex gap-3" : "block"}>
           <div className={`relative overflow-hidden ${classes.image}`}>
             <Image
