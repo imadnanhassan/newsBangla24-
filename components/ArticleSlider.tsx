@@ -3,10 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Article } from "@/types";
-
 interface ArticleSliderProps {
-  articles: Article[];
+  articles: any[];
   autoPlay?: boolean;
   interval?: number;
 }
@@ -58,7 +56,7 @@ export default function ArticleSlider({
       >
         {articles.map((article, index) => (
           <div key={index} className="w-full shrink-0">
-            <Link href={`/article/${article.id}`} className="block">
+            <Link href={`/article/${article.slug}`} className="block">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src={article.image_url || "/placeholder.png"}

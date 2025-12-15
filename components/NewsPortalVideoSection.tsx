@@ -10,7 +10,7 @@ export default function NewsPortalVideoSection({
   videos,
   title = "ভিডিও",
 }: {
-  videos: Article[];
+  videos: any[];
   title?: string;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

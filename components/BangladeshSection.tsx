@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Article, Category } from "@/types";
+import type { Category } from "@/types";
 
 interface BangladeshSectionProps {
-  articles: Article[];
+  articles: any[];
   categories: Category[];
 }
 
@@ -126,7 +126,7 @@ export default function BangladeshSection({
                 key={article.id}
                 className="group border-b border-gray-200 pb-4 hover:shadow-sm transition-all"
               >
-                <Link href={`/article/${article.id}`} className="block">
+                <Link href={`/article/${article.slug}`} className="block">
                   <div className="flex gap-3">
                     <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image

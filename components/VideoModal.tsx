@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import type { Article } from "@/types";
-
 interface VideoModalProps {
-  videos: Article[];
+  videos: any[];
   isOpen: boolean;
   onClose: () => void;
   initialVideoIndex?: number;

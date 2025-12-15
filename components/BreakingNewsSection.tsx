@@ -142,7 +142,7 @@ export default function BreakingNewsSection() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <Link
-                        href={`/article/${article.id}`}
+                        href={`/article/${article.slug}`}
                         className="block hover:text-red-200 transition-colors"
                       >
                         <h3 className="font-semibold text-lg leading-tight line-clamp-2">

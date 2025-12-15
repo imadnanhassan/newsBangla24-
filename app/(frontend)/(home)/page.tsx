@@ -8,20 +8,31 @@ import BangladeshSection from "@/components/BangladeshSection";
 import BreakingNewsSection from "@/components/BreakingNewsSection";
 
 export default function Home() {
+  // Safety check for articles
+  if (!articles || articles.length === 0) {
+    return (
+      <main className="py-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800">Loading...</h1>
+        </div>
+      </main>
+    );
+  }
+
   // Get featured articles for different sections
   const featuredArticles = articles.slice(0, 8);
   const latestArticles = articles.slice(8, 16);
   const politicsArticles = articles
-    .filter((a) => a.category.slug === "politics")
+    .filter((a) => a.category.slug === "national")
     .slice(0, 8);
   const businessArticles = articles
-    .filter((a) => a.category.slug === "business")
+    .filter((a) => a.category.slug === "economy")
     .slice(0, 8);
   const sportsArticles = articles
     .filter((a) => a.category.slug === "sports")
     .slice(0, 8);
   const techArticles = articles
-    .filter((a) => a.category.slug === "tech")
+    .filter((a) => a.category.slug === "technology")
     .slice(0, 8);
   const entertainmentArticles = articles
     .filter((a) => a.category.slug === "entertainment")
@@ -30,12 +41,12 @@ export default function Home() {
     .filter((a) => a.category.slug === "health")
     .slice(0, 8);
   const worldArticles = articles
-    .filter((a) => a.category.slug === "world-news")
+    .filter((a) => a.category.slug === "international")
     .slice(0, 8);
 
   // Get video articles (using tech articles as placeholder for videos)
   const videoArticles = articles
-    .filter((a) => a.category.slug === "tech")
+    .filter((a) => a.category.slug === "technology")
     .slice(0, 6);
 
   return (
@@ -95,7 +106,7 @@ export default function Home() {
       <BangladeshSection
         articles={articles.filter(
           (a) =>
-            a.category.slug === "country-news" || a.category.slug === "politics"
+            a.category.slug === "national" || a.category.slug === "international"
         )}
         categories={categories}
       />
@@ -107,7 +118,7 @@ export default function Home() {
             রাজনীতি
           </h2>
           <Link
-            href="/categories/politics"
+            href="/categories/national"
             className="text-red-600 hover:text-red-700 text-sm font-medium"
           >
             সব দেখুন →
@@ -131,7 +142,7 @@ export default function Home() {
             অর্থনীতি
           </h2>
           <Link
-            href="/categories/business"
+            href="/categories/economy"
             className="text-red-600 hover:text-red-700 text-sm font-medium"
           >
             সব দেখুন →
@@ -179,7 +190,7 @@ export default function Home() {
             প্রযুক্তি
           </h2>
           <Link
-            href="/categories/tech"
+            href="/categories/technology"
             className="text-red-600 hover:text-red-700 text-sm font-medium"
           >
             সব দেখুন →
@@ -253,7 +264,7 @@ export default function Home() {
               আন্তর্জাতিক
             </h2>
             <Link
-              href="/categories/world-news"
+              href="/categories/international"
               className="text-red-600 hover:text-red-700 text-sm font-medium"
             >
               সব দেখুন →

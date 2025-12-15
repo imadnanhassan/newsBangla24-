@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/types";
 
-export default function ArticleCard({ article }: { article: Article }) {
+export default function ArticleCard({ article }: { article: any }) {
   return (
     <article className="group rounded-lg border border-border bg-card shadow-sm">
-      <Link href={`/article/${article.id}`} className="block">
+      <Link href={`/article/${article.slug}`} className="block">
         <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
           {article.image_url && (
             <Image

@@ -1,9 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { Article } from "@/types";
-
 interface ProthomAloArticleCardProps {
-  article: Article;
+  article: any;
   variant?: "featured" | "large" | "medium" | "small";
 }
 
@@ -55,7 +53,7 @@ export default function ProthomAloArticleCard({
     <article
       className={`group border-b border-gray-200 pb-4 ${classes.container}`}
     >
-      <Link href={`/article/${article.id}`} className="block">
+      <Link href={`/article/${article.slug}`} className="block">
         <div className={variant === "small" ? "flex gap-3" : "block"}>
           <div className={`relative overflow-hidden ${classes.image}`}>
             <Image

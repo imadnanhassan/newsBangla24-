@@ -42,7 +42,7 @@ export default function SimpleBreakingNews() {
                   />
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/article/${article.id}`}
+                      href={`/article/${article.slug}`}
                       className="hover:text-red-200 transition-colors"
                     >
                       <h4 className="font-semibold text-sm leading-tight line-clamp-2">
@@ -73,7 +73,7 @@ export default function SimpleBreakingNews() {
                   />
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/article/${article.id}`}
+                      href={`/article/${article.slug}`}
                       className="hover:text-red-200 transition-colors"
                     >
                       <h4 className="font-semibold text-sm leading-tight line-clamp-2">

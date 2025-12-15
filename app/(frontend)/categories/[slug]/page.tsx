@@ -9,13 +9,15 @@ interface PageProps {
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const category = categories.find((c) => c.slug === slug);
+  
+  try {
+    const category = categories.find((c) => c.slug === slug);
 
-  if (!category) {
-    notFound();
-  }
+    if (!category) {
+      notFound();
+    }
 
-  const categoryArticles = articlesByCategory[category.slug] || [];
+    const categoryArticles = articlesByCategory[category.slug] || [];
 
   // Sort articles by date (newest first)
   const sortedArticles = [...categoryArticles].sort(
@@ -81,7 +83,7 @@ export default async function CategoryPage({ params }: PageProps) {
                     {featuredArticle.excerpt}
                   </p>
                   <a
-                    href={`/article/${featuredArticle.id}`}
+                    href={`/article/${featuredArticle.slug}`}
                     className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors w-fit"
                   >
                     <span>পড়ুন</span>
@@ -150,4 +152,8 @@ export default async function CategoryPage({ params }: PageProps) {
       )}
     </main>
   );
+  } catch (error) {
+    console.error('Error loading category:', error);
+    notFound();
+  }
 }
