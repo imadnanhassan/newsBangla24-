@@ -34,7 +34,12 @@ export interface Author {
   };
 }
 
-export type ArticleStatus = 'draft' | 'pending' | 'published' | 'rejected' | 'archived';
+export type ArticleStatus =
+  | "draft"
+  | "pending"
+  | "published"
+  | "rejected"
+  | "archived";
 
 export interface Article {
   id: string;
@@ -100,8 +105,8 @@ export interface ArticleFilter {
   dateTo?: string;
   search?: string;
   tags?: string[];
-  sortBy?: 'createdAt' | 'publishedAt' | 'views' | 'title';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "createdAt" | "publishedAt" | "views" | "title";
+  sortOrder?: "asc" | "desc";
   page?: number;
   limit?: number;
 }

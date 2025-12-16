@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Category } from "@/types";
+import type { Article, Category } from "@/types";
 
 interface BangladeshSectionProps {
   articles: any[];
@@ -130,7 +130,7 @@ export default function BangladeshSection({
                   <div className="flex gap-3">
                     <div className="relative aspect-video w-24 shrink-0 rounded overflow-hidden">
                       <Image
-                        src={article.image_url || "/placeholder.png"}
+                        src={article.featuredImage || "/placeholder.png"}
                         alt={article.title}
                         fill
                         className="object-cover transition-transform group-hover:scale-105"

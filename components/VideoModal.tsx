@@ -38,7 +38,7 @@ export default function VideoModal({
 
   const currentVideo = videos[currentVideoIndex];
 
-  const getVideoSource = (video: Article) => {
+  const getVideoSource = (video: any) => {
     // Priority: youtubeId > videoUrl > slug fallback
     if (video.youtubeId) {
       return `https://www.youtube.com/embed/${video.youtubeId}`;

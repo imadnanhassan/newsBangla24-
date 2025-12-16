@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import MainHeader from './MainHeader';
-import MainFooter from './MainFooter';
-import { ClientSession } from '@/lib/session';
-import type { SessionUser } from '@/types';
+import { useState, useEffect } from "react";
+
+import { ClientSession } from "@/lib/session";
+import type { SessionUser } from "@/types";
+import { MainFooter, MainHeader } from ".";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -13,11 +13,11 @@ interface MainLayoutProps {
   className?: string;
 }
 
-export default function MainLayout({ 
-  children, 
-  showHeader = true, 
+export default function MainLayout({
+  children,
+  showHeader = true,
   showFooter = true,
-  className = ''
+  className = "",
 }: MainLayoutProps) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -43,13 +43,13 @@ export default function MainLayout({
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 ${className}`}>
-      {showHeader && <MainHeader user={user} />}
-      
-      <main className="flex-1">
-        {children}
-      </main>
-      
+    <div
+      className={`min-h-screen bg-linear-to-br from-slate-50 via-gray-50 to-slate-100 ${className}`}
+    >
+      {showHeader && <MainHeader />}
+
+      <main className="flex-1">{children}</main>
+
       {showFooter && <MainFooter />}
     </div>
   );
