@@ -213,7 +213,7 @@ export default function DashboardClient() {
     <div className="min-h-screen bg-gray-50">
       {/* Welcome Header */}
       <div className="bg-linear-to-r from-blue-600 via-purple-600 to-blue-800 text-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="text-center">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
               Welcome back, Admin! 👋
@@ -227,7 +227,7 @@ export default function DashboardClient() {
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-4">
           <div>

@@ -173,7 +173,7 @@ export default function ArticleManagementClient() {
         </div>
         <div className="mt-4 sm:mt-0 flex space-x-3">
           <Link href="/dashboard/article/add">
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg flex items-center">
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-all flex items-center">
               <Plus className="w-4 h-4 mr-2" />
               New Article
             </button>
@@ -189,7 +189,7 @@ export default function ArticleManagementClient() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-2xl border-3 border-green-100 p-6 hover:border-green-300 transition-all duration-300">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
               <CheckCircle className="w-6 h-6 text-white" />
             </div>
             <div className="ml-4">
@@ -200,7 +200,7 @@ export default function ArticleManagementClient() {
         </div>
         <div className="bg-white rounded-2xl border-3 border-yellow-100 p-6 hover:border-yellow-300 transition-all duration-300">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center">
               <AlertCircle className="w-6 h-6 text-white" />
             </div>
             <div className="ml-4">
@@ -211,7 +211,7 @@ export default function ArticleManagementClient() {
         </div>
         <div className="bg-white rounded-2xl border-3 border-gray-100 p-6 hover:border-gray-300 transition-all duration-300">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-gray-500 rounded-lg flex items-center justify-center">
               <FileText className="w-6 h-6 text-white" />
             </div>
             <div className="ml-4">
@@ -222,7 +222,7 @@ export default function ArticleManagementClient() {
         </div>
         <div className="bg-white rounded-2xl border-3 border-blue-100 p-6 hover:border-blue-300 transition-all duration-300">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
               <Calendar className="w-6 h-6 text-white" />
             </div>
             <div className="ml-4">

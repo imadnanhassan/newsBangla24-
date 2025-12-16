@@ -109,7 +109,7 @@ export default function AnalyticsClient() {
             <option value="30d">Last 30 Days</option>
             <option value="90d">Last 90 Days</option>
           </select>
-          <button className="bg-gradient-to-r from-primary to-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-red-700 hover:to-red-700 transition-all flex items-center">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-all flex items-center">
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </button>
@@ -123,10 +123,10 @@ export default function AnalyticsClient() {
           const colors = ["blue", "green", "purple", "orange"];
           const color = colors[index % colors.length];
           const colorClasses = {
-            blue: "bg-gradient-to-br from-blue-500 to-blue-600",
-            green: "bg-gradient-to-br from-green-500 to-green-600",
-            purple: "bg-gradient-to-br from-purple-500 to-purple-600",
-            orange: "bg-gradient-to-br from-orange-500 to-orange-600",
+            blue: "bg-blue-500",
+            green: "bg-green-500",
+            purple: "bg-purple-500",
+            orange: "bg-orange-500",
           };
 
           return (
@@ -192,7 +192,7 @@ export default function AnalyticsClient() {
               (height, index) => (
                 <div
                   key={index}
-                  className="flex-1 bg-gradient-to-t from-primary to-red-400 rounded-t-xl hover:from-red-700 hover:to-red-500 transition-all duration-300 cursor-pointer"
+                  className="flex-1 bg-blue-500 rounded-t-lg hover:bg-blue-700 transition-all duration-300 cursor-pointer"
                   style={{ height: `${height}%` }}
                 ></div>
               )
@@ -263,7 +263,7 @@ export default function AnalyticsClient() {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full"
+                      className="bg-blue-600 h-2 rounded-full"
                       style={{ width: `${source.percentage}%` }}
                     ></div>
                   </div>

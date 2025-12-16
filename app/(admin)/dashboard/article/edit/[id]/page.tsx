@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { useParams } from 'next/navigation';
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useParams } from "next/navigation";
 import {
   ArrowLeft,
   Save,
@@ -18,11 +18,15 @@ import {
   FileText,
   X,
   Plus,
-  AlertCircle
-} from 'lucide-react';
+  AlertCircle,
+} from "lucide-react";
 
-import SimpleTextEditor from '@/components/SimpleTextEditor';
-import { uploadImage, validateImageFile, compressImage } from '@/lib/imageUpload';
+import SimpleTextEditor from "@/components/SimpleTextEditor";
+import {
+  uploadImage,
+  validateImageFile,
+  compressImage,
+} from "@/lib/imageUpload";
 
 // Type definitions
 interface FormData {
@@ -46,58 +50,71 @@ interface FormData {
 export default function EditArticlePage() {
   const params = useParams();
   const articleId = params.id;
-  
+
   const [formData, setFormData] = useState<FormData>({
-    title: '',
-    subtitle: '',
-    content: '',
-    excerpt: '',
-    category: '',
+    title: "",
+    subtitle: "",
+    content: "",
+    excerpt: "",
+    category: "",
     tags: [],
-    author: '',
-    status: 'draft',
-    publishDate: '',
+    author: "",
+    status: "draft",
+    publishDate: "",
     featuredImage: null,
     gallery: [],
-    seoTitle: '',
-    seoDescription: '',
-    priority: 'medium',
-    featured: false
+    seoTitle: "",
+    seoDescription: "",
+    priority: "medium",
+    featured: false,
   });
 
   const [loading, setLoading] = useState(true);
-  const [newTag, setNewTag] = useState('');
+  const [newTag, setNewTag] = useState("");
   const [previewMode, setPreviewMode] = useState(false);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
   // Helper function to count words in HTML content
   const getWordCount = (html: string) => {
-    const text = html.replace(/<[^>]*>/g, '').trim();
+    const text = html.replace(/<[^>]*>/g, "").trim();
     return text ? text.split(/\s+/).length : 0;
   };
 
   // Validation function
   const validateForm = () => {
-    const newErrors: {[key: string]: string} = {};
-    
-    if (!formData.title.trim()) newErrors.title = 'Title is required';
-    if (!formData.content.trim() || formData.content === '<p><br></p>') newErrors.content = 'Content is required';
-    if (!formData.category) newErrors.category = 'Category is required';
-    if (!formData.author) newErrors.author = 'Author is required';
-    
+    const newErrors: { [key: string]: string } = {};
+
+    if (!formData.title.trim()) newErrors.title = "Title is required";
+    if (!formData.content.trim() || formData.content === "<p><br></p>")
+      newErrors.content = "Content is required";
+    if (!formData.category) newErrors.category = "Category is required";
+    if (!formData.author) newErrors.author = "Author is required";
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const categories = [
-    'Politics', 'Sports', 'Technology', 'Business', 'Entertainment', 
-    'Health', 'Education', 'International', 'National', 'Local'
+    "Politics",
+    "Sports",
+    "Technology",
+    "Business",
+    "Entertainment",
+    "Health",
+    "Education",
+    "International",
+    "National",
+    "Local",
   ];
 
   const authors = [
-    'আহমেদ হাসান', 'রহিমা খাতুন', 'করিম উদ্দিন', 'ফাতেমা বেগম', 'মোহাম্মদ আলী'
+    "আহমেদ হাসান",
+    "রহিমা খাতুন",
+    "করিম উদ্দিন",
+    "ফাতেমা বেগম",
+    "মোহাম্মদ আলী",
   ];
 
   // Image upload handler for editor with validation and compression
@@ -111,7 +128,8 @@ export default function EditArticlePage() {
 
       // Compress image if it's too large
       let processedFile = file;
-      if (file.size > 1024 * 1024) { // If larger than 1MB, compress
+      if (file.size > 1024 * 1024) {
+        // If larger than 1MB, compress
         processedFile = await compressImage(file, 1200, 0.8);
       }
 
@@ -119,13 +137,11 @@ export default function EditArticlePage() {
       const imageUrl = await uploadImage(processedFile);
       return imageUrl;
     } catch (error) {
-      console.error('Image upload failed:', error);
+      console.error("Image upload failed:", error);
       // Fallback: create local URL for preview
       return URL.createObjectURL(file);
     }
   };
-
-
 
   // Mock data loading - replace with actual API call
   useEffect(() => {
@@ -133,21 +149,23 @@ export default function EditArticlePage() {
       // Simulate API call
       setTimeout(() => {
         setFormData({
-          title: 'Breaking: Prime Minister Announces New Economic Policy',
-          subtitle: 'Comprehensive reforms aimed at boosting economic growth',
-          content: '<p>This is the article content loaded from the database...</p>',
-          excerpt: 'A brief summary of the economic policy announcement.',
-          category: 'Politics',
-          tags: ['politics', 'economy', 'government'],
-          author: 'আহমেদ হাসান',
-          status: 'published',
-          publishDate: '2024-12-15T10:30',
+          title: "Breaking: Prime Minister Announces New Economic Policy",
+          subtitle: "Comprehensive reforms aimed at boosting economic growth",
+          content:
+            "<p>This is the article content loaded from the database...</p>",
+          excerpt: "A brief summary of the economic policy announcement.",
+          category: "Politics",
+          tags: ["politics", "economy", "government"],
+          author: "আহমেদ হাসান",
+          status: "published",
+          publishDate: "2024-12-15T10:30",
           featuredImage: null,
           gallery: [],
-          seoTitle: 'PM Announces New Economic Policy - Breaking News',
-          seoDescription: 'Latest updates on the new economic policy announced by the Prime Minister.',
-          priority: 'high',
-          featured: true
+          seoTitle: "PM Announces New Economic Policy - Breaking News",
+          seoDescription:
+            "Latest updates on the new economic policy announced by the Prime Minister.",
+          priority: "high",
+          featured: true,
         });
         setLoading(false);
       }, 1000);
@@ -157,59 +175,66 @@ export default function EditArticlePage() {
   }, [articleId]);
 
   const handleInputChange = (field: string, value: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleAddTag = () => {
     if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        tags: [...prev.tags, newTag.trim()]
+        tags: [...prev.tags, newTag.trim()],
       }));
-      setNewTag('');
+      setNewTag("");
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, type: 'featured' | 'gallery') => {
+  const handleImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: "featured" | "gallery"
+  ) => {
     const files = Array.from(event.target.files || []) as File[];
-    if (type === 'featured' && files[0]) {
-      setFormData(prev => ({
+    if (type === "featured" && files[0]) {
+      setFormData((prev) => ({
         ...prev,
-        featuredImage: files[0]
+        featuredImage: files[0],
       }));
-    } else if (type === 'gallery') {
-      setFormData(prev => ({
+    } else if (type === "gallery") {
+      setFormData((prev) => ({
         ...prev,
-        gallery: [...prev.gallery, ...files]
+        gallery: [...prev.gallery, ...files],
       }));
     }
   };
 
   const handleSubmit = (status: string) => {
     if (!validateForm()) {
-      alert('Please fill in all required fields');
+      alert("Please fill in all required fields");
       return;
     }
 
     const articleData = {
       ...formData,
       status,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
-    
-    console.log('Updated Article Data:', articleData);
+
+    console.log("Updated Article Data:", articleData);
     // Here you would typically send the data to your API
-    alert(`Article ${status === 'published' ? 'updated and published' : 'updated'} successfully!`);
+    alert(
+      `Article ${
+        status === "published" ? "updated and published" : "updated"
+      } successfully!`
+    );
   };
 
   if (loading) {
@@ -228,7 +253,10 @@ export default function EditArticlePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Link href="/dashboard/article" className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+          <Link
+            href="/dashboard/article"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+          >
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </Link>
           <div>
@@ -249,18 +277,18 @@ export default function EditArticlePage() {
             className="flex items-center px-4 py-2 border-2 border-gray-200 text-gray-700 rounded-xl hover:border-gray-300 transition-colors"
           >
             <Eye className="w-4 h-4 mr-2" />
-            {previewMode ? 'Edit' : 'Preview'}
+            {previewMode ? "Edit" : "Preview"}
           </button>
           <button
-            onClick={() => handleSubmit('draft')}
+            onClick={() => handleSubmit("draft")}
             className="flex items-center px-4 py-2 border-2 border-blue-200 text-blue-700 rounded-xl hover:border-blue-300 transition-colors"
           >
             <Save className="w-4 h-4 mr-2" />
             Save Changes
           </button>
           <button
-            onClick={() => handleSubmit('published')}
-            className="flex items-center px-4 py-2 bg-gradient-to-r from-primary to-red-600 text-white rounded-xl hover:from-red-700 hover:to-red-700 transition-all"
+            onClick={() => handleSubmit("published")}
+            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
           >
             <Globe className="w-4 h-4 mr-2" />
             Update & Publish
@@ -277,35 +305,43 @@ export default function EditArticlePage() {
               <FileText className="w-5 h-5 mr-2 text-blue-600" />
               Article Content
             </h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Title *
+                </label>
                 <input
                   type="text"
                   value={formData.title}
-                  onChange={(e) => handleInputChange('title', e.target.value)}
+                  onChange={(e) => handleInputChange("title", e.target.value)}
                   placeholder="Enter article title..."
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all text-lg font-medium"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Subtitle
+                </label>
                 <input
                   type="text"
                   value={formData.subtitle}
-                  onChange={(e) => handleInputChange('subtitle', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("subtitle", e.target.value)
+                  }
                   placeholder="Enter article subtitle..."
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Content *
+                </label>
                 <SimpleTextEditor
                   value={formData.content}
-                  onChange={(content) => handleInputChange('content', content)}
+                  onChange={(content) => handleInputChange("content", content)}
                   placeholder="Write your article content here..."
                   className="border-2 rounded-xl overflow-hidden transition-all"
                   error={false}
@@ -314,10 +350,12 @@ export default function EditArticlePage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Excerpt
+                </label>
                 <textarea
                   value={formData.excerpt}
-                  onChange={(e) => handleInputChange('excerpt', e.target.value)}
+                  onChange={(e) => handleInputChange("excerpt", e.target.value)}
                   placeholder="Brief summary of the article..."
                   rows={3}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
@@ -332,7 +370,7 @@ export default function EditArticlePage() {
               <ImageIcon className="w-5 h-5 mr-2 text-green-600" />
               Featured Image
             </h3>
-            
+
             <div className="space-y-4">
               {formData.featuredImage ? (
                 <div className="relative">
@@ -342,7 +380,7 @@ export default function EditArticlePage() {
                     className="w-full h-48 object-cover rounded-xl border-2 border-gray-200"
                   />
                   <button
-                    onClick={() => handleInputChange('featuredImage', null)}
+                    onClick={() => handleInputChange("featuredImage", null)}
                     className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
                   >
                     <X className="w-4 h-4" />
@@ -354,16 +392,20 @@ export default function EditArticlePage() {
                   className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-primary hover:bg-red-50 transition-all"
                 >
                   <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">Click to upload featured image</p>
-                  <p className="text-sm text-gray-400 mt-1">PNG, JPG up to 10MB</p>
+                  <p className="text-gray-600">
+                    Click to upload featured image
+                  </p>
+                  <p className="text-sm text-gray-400 mt-1">
+                    PNG, JPG up to 10MB
+                  </p>
                 </div>
               )}
-              
+
               <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
-                onChange={(e) => handleImageUpload(e, 'featured')}
+                onChange={(e) => handleImageUpload(e, "featured")}
                 className="hidden"
               />
             </div>
@@ -375,24 +417,32 @@ export default function EditArticlePage() {
               <Globe className="w-5 h-5 mr-2 text-purple-600" />
               SEO Settings
             </h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">SEO Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  SEO Title
+                </label>
                 <input
                   type="text"
                   value={formData.seoTitle}
-                  onChange={(e) => handleInputChange('seoTitle', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("seoTitle", e.target.value)
+                  }
                   placeholder="SEO optimized title..."
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">SEO Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  SEO Description
+                </label>
                 <textarea
                   value={formData.seoDescription}
-                  onChange={(e) => handleInputChange('seoDescription', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("seoDescription", e.target.value)
+                  }
                   placeholder="SEO meta description..."
                   rows={3}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
@@ -410,13 +460,15 @@ export default function EditArticlePage() {
               <Calendar className="w-5 h-5 mr-2 text-blue-600" />
               Publish Settings
             </h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Status
+                </label>
                 <select
                   value={formData.status}
-                  onChange={(e) => handleInputChange('status', e.target.value)}
+                  onChange={(e) => handleInputChange("status", e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 >
                   <option value="draft">Draft</option>
@@ -426,20 +478,28 @@ export default function EditArticlePage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Publish Date</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Publish Date
+                </label>
                 <input
                   type="datetime-local"
                   value={formData.publishDate}
-                  onChange={(e) => handleInputChange('publishDate', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("publishDate", e.target.value)
+                  }
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Priority
+                </label>
                 <select
                   value={formData.priority}
-                  onChange={(e) => handleInputChange('priority', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("priority", e.target.value)
+                  }
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 >
                   <option value="low">Low</option>
@@ -453,10 +513,15 @@ export default function EditArticlePage() {
                   type="checkbox"
                   id="featured"
                   checked={formData.featured}
-                  onChange={(e) => handleInputChange('featured', e.target.checked)}
+                  onChange={(e) =>
+                    handleInputChange("featured", e.target.checked)
+                  }
                   className="w-4 h-4 text-primary border-2 border-gray-300 rounded focus:ring-primary"
                 />
-                <label htmlFor="featured" className="ml-2 text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="featured"
+                  className="ml-2 text-sm font-medium text-gray-700"
+                >
                   Featured Article
                 </label>
               </div>
@@ -469,32 +534,42 @@ export default function EditArticlePage() {
               <Tag className="w-5 h-5 mr-2 text-green-600" />
               Classification
             </h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category *
+                </label>
                 <select
                   value={formData.category}
-                  onChange={(e) => handleInputChange('category', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("category", e.target.value)
+                  }
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 >
                   <option value="">Select Category</option>
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Author *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Author *
+                </label>
                 <select
                   value={formData.author}
-                  onChange={(e) => handleInputChange('author', e.target.value)}
+                  onChange={(e) => handleInputChange("author", e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 >
                   <option value="">Select Author</option>
-                  {authors.map(author => (
-                    <option key={author} value={author}>{author}</option>
+                  {authors.map((author) => (
+                    <option key={author} value={author}>
+                      {author}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -507,14 +582,14 @@ export default function EditArticlePage() {
               <Tag className="w-5 h-5 mr-2 text-orange-600" />
               Tags
             </h3>
-            
+
             <div className="space-y-4">
               <div className="flex space-x-2">
                 <input
                   type="text"
                   value={newTag}
                   onChange={(e) => setNewTag(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
+                  onKeyPress={(e) => e.key === "Enter" && handleAddTag()}
                   placeholder="Add tag..."
                   className="flex-1 px-3 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                 />
@@ -525,7 +600,7 @@ export default function EditArticlePage() {
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
                 {formData.tags.map((tag, index) => (
                   <span
