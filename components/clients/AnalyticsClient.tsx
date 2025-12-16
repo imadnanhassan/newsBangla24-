@@ -179,7 +179,7 @@ export default function AnalyticsClient() {
               Traffic Overview
             </h3>
             <div className="flex space-x-2">
-              <button className="text-xs px-4 py-2 bg-gradient-to-r from-primary to-red-600 text-white rounded-full font-medium hover:opacity-90 transition-all">
+              <button className="text-xs px-4 py-2 bg-linear-to-r from-primary to-red-600 text-white rounded-full font-medium hover:opacity-90 transition-all">
                 Views
               </button>
               <button className="text-xs px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors">

@@ -36,7 +36,7 @@ export default function DashboardClient() {
       change: "+12%",
       changeType: "positive",
       icon: FileText,
-      color: "bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600",
+      color: "bg-linear-to-br from-blue-400 via-blue-500 to-blue-600",
       bgColor: "bg-blue-50",
       borderColor: "border-blue-200",
     },
@@ -46,7 +46,7 @@ export default function DashboardClient() {
       change: "+8%",
       changeType: "positive",
       icon: Users,
-      color: "bg-gradient-to-br from-emerald-400 via-green-500 to-green-600",
+      color: "bg-linear-to-br from-emerald-400 via-green-500 to-green-600",
       bgColor: "bg-emerald-50",
       borderColor: "border-emerald-200",
     },
@@ -56,7 +56,7 @@ export default function DashboardClient() {
       change: "+23%",
       changeType: "positive",
       icon: Eye,
-      color: "bg-gradient-to-br from-purple-400 via-purple-500 to-purple-600",
+      color: "bg-linear-to-br from-purple-400 via-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       borderColor: "border-purple-200",
     },
@@ -66,7 +66,7 @@ export default function DashboardClient() {
       change: "-3%",
       changeType: "negative",
       icon: MessageSquare,
-      color: "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600",
+      color: "bg-linear-to-br from-orange-400 via-orange-500 to-orange-600",
       bgColor: "bg-orange-50",
       borderColor: "border-orange-200",
     },
@@ -76,7 +76,7 @@ export default function DashboardClient() {
       change: "+5%",
       changeType: "positive",
       icon: Zap,
-      color: "bg-gradient-to-br from-red-400 via-red-500 to-red-600",
+      color: "bg-linear-to-br from-red-400 via-red-500 to-red-600",
       bgColor: "bg-red-50",
       borderColor: "border-red-200",
     },
@@ -86,7 +86,7 @@ export default function DashboardClient() {
       change: "+2",
       changeType: "positive",
       icon: Rss,
-      color: "bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600",
+      color: "bg-linear-to-br from-pink-400 via-pink-500 to-pink-600",
       bgColor: "bg-pink-50",
       borderColor: "border-pink-200",
     },
@@ -96,7 +96,7 @@ export default function DashboardClient() {
       change: "+18%",
       changeType: "positive",
       icon: Video,
-      color: "bg-gradient-to-br from-indigo-400 via-indigo-500 to-indigo-600",
+      color: "bg-linear-to-br from-indigo-400 via-indigo-500 to-indigo-600",
       bgColor: "bg-indigo-50",
       borderColor: "border-indigo-200",
     },
@@ -106,7 +106,7 @@ export default function DashboardClient() {
       change: "+7%",
       changeType: "positive",
       icon: Bell,
-      color: "bg-gradient-to-br from-cyan-400 via-cyan-500 to-cyan-600",
+      color: "bg-linear-to-br from-cyan-400 via-cyan-500 to-cyan-600",
       bgColor: "bg-cyan-50",
       borderColor: "border-cyan-200",
     },
@@ -336,19 +336,19 @@ export default function DashboardClient() {
           {quickStats.map((stat, index) => {
             const colors = [
               {
-                bg: "bg-gradient-to-br from-yellow-400 to-yellow-500",
+                bg: "bg-linear-to-br from-yellow-400 to-yellow-500",
                 border: "border-yellow-300",
               },
               {
-                bg: "bg-gradient-to-br from-blue-400 to-blue-500",
+                bg: "bg-linear-to-br from-blue-400 to-blue-500",
                 border: "border-blue-300",
               },
               {
-                bg: "bg-gradient-to-br from-green-400 to-green-500",
+                bg: "bg-linear-to-br from-green-400 to-green-500",
                 border: "border-green-300",
               },
               {
-                bg: "bg-gradient-to-br from-purple-400 to-purple-500",
+                bg: "bg-linear-to-br from-purple-400 to-purple-500",
                 border: "border-purple-300",
               },
             ];
@@ -383,7 +383,7 @@ export default function DashboardClient() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Traffic Chart */}
-          <div className="lg:col-span-2 bg-gradient-to-br from-indigo-400 via-purple-500 to-pink-500 rounded-xl shadow-lg border-2 border-indigo-300 p-6 sm:p-8 text-white">
+          <div className="lg:col-span-2 bg-linear-to-br from-indigo-400 via-purple-500 to-pink-500 rounded-xl shadow-lg border-2 border-indigo-300 p-6 sm:p-8 text-white">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg sm:text-xl font-bold">Traffic Overview</h3>
               <div className="flex space-x-2">
@@ -416,7 +416,7 @@ export default function DashboardClient() {
           </div>
 
           {/* System Alerts */}
-          <div className="bg-gradient-to-br from-orange-400 via-red-500 to-pink-500 rounded-xl shadow-lg border-2 border-orange-300 p-6 sm:p-8 text-white">
+          <div className="bg-linear-to-br from-orange-400 via-red-500 to-pink-500 rounded-xl shadow-lg border-2 border-orange-300 p-6 sm:p-8 text-white">
             <h3 className="text-lg sm:text-xl font-bold mb-6">System Alerts</h3>
             <div className="space-y-4">
               {systemAlerts.map((alert, index) => (
@@ -445,7 +445,7 @@ export default function DashboardClient() {
         {/* Categories and Performance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Top Categories */}
-          <div className="bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-500 rounded-xl shadow-lg border-2 border-teal-300 p-6 sm:p-8 text-white">
+          <div className="bg-linear-to-br from-teal-400 via-cyan-500 to-blue-500 rounded-xl shadow-lg border-2 border-teal-300 p-6 sm:p-8 text-white">
             <h3 className="text-lg sm:text-xl font-bold mb-6">
               Top Categories
             </h3>
@@ -474,7 +474,7 @@ export default function DashboardClient() {
           </div>
 
           {/* Performance Metrics */}
-          <div className="bg-gradient-to-br from-rose-400 via-pink-500 to-purple-500 rounded-xl shadow-lg border-2 border-rose-300 p-6 sm:p-8 text-white">
+          <div className="bg-linear-to-br from-rose-400 via-pink-500 to-purple-500 rounded-xl shadow-lg border-2 border-rose-300 p-6 sm:p-8 text-white">
             <h3 className="text-lg sm:text-xl font-bold mb-6">
               Performance Metrics
             </h3>
@@ -512,7 +512,7 @@ export default function DashboardClient() {
         </div>
 
         {/* Recent Articles */}
-        <div className="bg-gradient-to-br from-slate-400 via-gray-500 to-slate-600 rounded-xl shadow-lg border-2 border-slate-300 p-6 sm:p-8 text-white mb-6 sm:mb-8">
+        <div className="bg-linear-to-br from-slate-400 via-gray-500 to-slate-600 rounded-xl shadow-lg border-2 border-slate-300 p-6 sm:p-8 text-white mb-6 sm:mb-8">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg sm:text-xl font-bold">Recent Articles</h3>
             <Link
@@ -584,7 +584,7 @@ export default function DashboardClient() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <Link
             href="/dashboard/article/add"
-            className="bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 rounded-xl shadow-lg border-2 border-green-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-green-400 via-emerald-500 to-teal-500 rounded-xl shadow-lg border-2 border-green-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">
@@ -601,7 +601,7 @@ export default function DashboardClient() {
 
           <Link
             href="/dashboard/breaking"
-            className="bg-gradient-to-br from-red-400 via-rose-500 to-pink-500 rounded-xl shadow-lg border-2 border-red-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-red-400 via-rose-500 to-pink-500 rounded-xl shadow-lg border-2 border-red-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">
@@ -618,7 +618,7 @@ export default function DashboardClient() {
 
           <Link
             href="/dashboard/live"
-            className="bg-gradient-to-br from-purple-400 via-violet-500 to-purple-600 rounded-xl shadow-lg border-2 border-purple-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-purple-400 via-violet-500 to-purple-600 rounded-xl shadow-lg border-2 border-purple-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">
@@ -635,7 +635,7 @@ export default function DashboardClient() {
 
           <Link
             href="/dashboard/analytics"
-            className="bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-500 rounded-xl shadow-lg border-2 border-cyan-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-cyan-400 via-blue-500 to-indigo-500 rounded-xl shadow-lg border-2 border-cyan-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">

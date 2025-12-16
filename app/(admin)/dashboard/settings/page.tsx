@@ -333,7 +333,7 @@ export default function SettingsPage() {
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar Navigation */}
-        <div className="lg:w-64 flex-shrink-0">
+        <div className="lg:w-64 -shrink-0">
           <nav className="bg-white rounded-2xl border-3 border-gray-100 p-2 hover:border-primary/30 transition-all duration-300">
             {tabs.map((tab) => {
               const IconComponent = tab.icon;

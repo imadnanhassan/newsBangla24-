@@ -176,7 +176,7 @@ export default function UserDashboardClient() {
                     </p>
                   </div>
                   <div
-                    className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center`}
+                    className={`w-12 h-12 rounded-lg bg-linear-to-br ${stat.color} flex items-center justify-center`}
                   >
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
@@ -201,7 +201,7 @@ export default function UserDashboardClient() {
                   key={article.id}
                   className="flex space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <div className="w-20 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
+                  <div className="w-20 h-16 bg-gray-200 rounded-lg shrink-0"></div>
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900 mb-1">
                       {article.title}
@@ -338,7 +338,7 @@ export default function UserDashboardClient() {
             {[30, 45, 25, 60, 80, 35, 55].map((height, index) => (
               <div
                 key={index}
-                className="flex-1 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg hover:from-blue-600 hover:to-blue-500 transition-all duration-300 cursor-pointer"
+                className="flex-1 bg-linear-to-t from-blue-500 to-blue-400 rounded-t-lg hover:from-blue-600 hover:to-blue-500 transition-all duration-300 cursor-pointer"
                 style={{ height: `${height}%` }}
               ></div>
             ))}
