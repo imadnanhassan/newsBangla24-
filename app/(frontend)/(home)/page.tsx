@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { categories, articles } from "@/lib/data";
 import Link from "next/link";
 import ProthomAloArticleCard from "@/components/ProthomAloArticleCard";
@@ -6,6 +7,14 @@ import NewsPortalVideoSection from "@/components/NewsPortalVideoSection";
 import ImprovedMasonryGrid from "@/components/ImprovedMasonryGrid";
 import BangladeshSection from "@/components/BangladeshSection";
 import BreakingNewsSection from "@/components/BreakingNewsSection";
+
+export const metadata: Metadata = {
+  title: "NewsBangla24 - Latest News from Bangladesh",
+  description:
+    "Stay updated with the latest news, breaking stories, and in-depth coverage from Bangladesh and around the world.",
+  keywords:
+    "news, Bangladesh, breaking news, politics, sports, technology, entertainment",
+};
 
 export default function Home() {
   // Safety check for articles
@@ -106,7 +115,8 @@ export default function Home() {
       <BangladeshSection
         articles={articles.filter(
           (a) =>
-            a.category.slug === "national" || a.category.slug === "international"
+            a.category.slug === "national" ||
+            a.category.slug === "international"
         )}
         categories={categories}
       />

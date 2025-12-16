@@ -1,9 +1,10 @@
 // Authentication related types
-export type UserRole = 'user' | 'reporter' | 'admin' | 'super_admin';
+export type UserRole = "user" | "reporter" | "admin" | "super_admin";
 
 export interface User {
   id: string;
   email: string;
+  password?: string;
   name: string;
   role: UserRole;
   avatar?: string;
@@ -28,8 +29,8 @@ export interface UserProfile {
 }
 
 export interface UserPreferences {
-  theme: 'light' | 'dark' | 'auto';
-  language: 'bn' | 'en';
+  theme: "light" | "dark" | "auto";
+  language: "bn" | "en";
   notifications: NotificationSettings;
   privacy: PrivacySettings;
 }
@@ -43,7 +44,7 @@ export interface NotificationSettings {
 }
 
 export interface PrivacySettings {
-  profileVisibility: 'public' | 'private';
+  profileVisibility: "public" | "private";
   showEmail: boolean;
   showPhone: boolean;
   allowMessages: boolean;
@@ -61,7 +62,7 @@ export interface RegisterData extends LoginCredentials {
 
 export interface AuthResponse {
   success: boolean;
-  user?: Omit<User, 'password'>;
+  user?: Omit<User, "password">;
   token?: string;
   message?: string;
 }

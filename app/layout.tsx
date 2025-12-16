@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <div className="mx-auto w-full">{children}</div>
+        <div>{children}</div>
       </body>
     </html>
   );
