@@ -1,10 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Inter } from "next/font/google";
 import { ClientSession } from "@/lib/session";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
 import type { SessionUser } from "@/types";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -30,7 +36,10 @@ export default function AdminLayout({ children, title }: AdminLayoutProps) {
 
   if (!mounted || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div
+        className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-slate-800 to-slate-900"
+        style={{ fontFamily: inter.style.fontFamily }}
+      >
         <div className="text-center">
           <div className="relative">
             <div className="w-20 h-20 border-4 border-blue-500/30 rounded-full animate-spin border-t-blue-500"></div>
@@ -49,7 +58,10 @@ export default function AdminLayout({ children, title }: AdminLayoutProps) {
   }
 
   return (
-    <div className="h-screen bg-linear-to-br from-slate-50 via-gray-50 to-slate-100 flex overflow-hidden">
+    <div
+      className="h-screen bg-linear-to-br from-slate-50 via-gray-50 to-slate-100 flex overflow-hidden"
+      style={{ fontFamily: inter.style.fontFamily }}
+    >
       {/* Sidebar */}
       <AdminSidebar />
 
