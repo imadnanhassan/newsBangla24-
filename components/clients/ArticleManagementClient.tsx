@@ -12,13 +12,10 @@ import {
   Edit,
   Trash2,
   CheckCircle,
-  Clock,
   AlertCircle,
   Calendar,
   MessageSquare,
-  Star,
   Upload,
-  MoreHorizontal,
 } from "lucide-react";
 
 export default function ArticleManagementClient() {
@@ -117,14 +114,6 @@ export default function ArticleManagementClient() {
       categoryFilter === "all" || article.category === categoryFilter;
     return matchesSearch && matchesStatus && matchesCategory;
   });
-
-  const handleSelectAll = () => {
-    if (selectedArticles.length === filteredArticles.length) {
-      setSelectedArticles([]);
-    } else {
-      setSelectedArticles(filteredArticles.map((article) => article.id));
-    }
-  };
 
   const handleSelectArticle = (id: number) => {
     setSelectedArticles((prev) =>
