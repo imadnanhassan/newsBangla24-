@@ -27,6 +27,7 @@ import {
 
 export default function DashboardClient() {
   const [timeRange, setTimeRange] = useState("7d");
+  const [selectedTab, setSelectedTab] = useState("views");
 
   // Mock data for dashboard
   const stats = [
@@ -112,6 +113,11 @@ export default function DashboardClient() {
     },
   ];
 
+  const trafficData: Record<string, number[]> = {
+    views: [65, 78, 52, 89, 94, 76, 85],
+    users: [45, 68, 72, 59, 84, 66, 75],
+  };
+
   const recentArticles = [
     {
       id: 1,
@@ -122,6 +128,7 @@ export default function DashboardClient() {
       comments: 45,
       category: "Politics",
       date: "2 hours ago",
+      thumbnail: "/api/placeholder/80/60",
     },
     {
       id: 2,
@@ -132,6 +139,7 @@ export default function DashboardClient() {
       comments: 23,
       category: "Technology",
       date: "4 hours ago",
+      thumbnail: "/api/placeholder/80/60",
     },
     {
       id: 3,
@@ -142,6 +150,7 @@ export default function DashboardClient() {
       comments: 67,
       category: "Sports",
       date: "6 hours ago",
+      thumbnail: "/api/placeholder/80/60",
     },
     {
       id: 4,
@@ -152,6 +161,7 @@ export default function DashboardClient() {
       comments: 12,
       category: "Health",
       date: "8 hours ago",
+      thumbnail: "/api/placeholder/80/60",
     },
   ];
 
@@ -260,38 +270,60 @@ export default function DashboardClient() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
+            const bgClasses = [
+              "bg-linear-to-br from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400",
+              "bg-linear-to-br from-emerald-200 to-emerald-300 hover:from-emerald-300 hover:to-emerald-400",
+              "bg-linear-to-br from-purple-200 to-purple-300 hover:from-purple-300 hover:to-purple-400",
+              "bg-linear-to-br from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400",
+              "bg-linear-to-br from-red-200 to-red-300 hover:from-red-300 hover:to-red-400",
+              "bg-linear-to-br from-pink-200 to-pink-300 hover:from-pink-300 hover:to-pink-400",
+              "bg-linear-to-br from-indigo-200 to-indigo-300 hover:from-indigo-300 hover:to-indigo-400",
+              "bg-linear-to-br from-cyan-200 to-cyan-300 hover:from-cyan-300 hover:to-cyan-400",
+            ];
+            const iconBgs = [
+              "bg-blue-500",
+              "bg-emerald-500",
+              "bg-purple-500",
+              "bg-orange-500",
+              "bg-red-500",
+              "bg-pink-500",
+              "bg-indigo-500",
+              "bg-cyan-500",
+            ];
 
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                className={`${bgClasses[index]} rounded p-6 transition-all duration-300`}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`rounded-2xl shadow-lg ${stat.bgColor} ${stat.borderColor} border-2 p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-1`}
+                transition={{ delay: index * 0.1 }}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
+                <div className="flex items-center">
+                  <div
+                    className={`w-12 h-12 ${iconBgs[index]} rounded-lg flex items-center justify-center`}
+                  >
+                    <IconComponent className="w-6 h-6 text-white" />
+                  </div>
+                  <motion.div
+                    className="ml-4"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + index * 0.1 }}
+                  >
                     <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                      className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-2"
+                      className="text-sm font-medium text-gray-600"
+                      whileHover={{ scale: 1.1 }}
                     >
                       {stat.title}
                     </motion.p>
                     <motion.p
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 0.4 + index * 0.1,
-                        type: "spring",
-                      }}
-                      className="text-3xl sm:text-4xl font-black text-gray-900 mb-3"
+                      className="text-3xl font-bold text-gray-900"
+                      whileHover={{ scale: 1.1 }}
                     >
                       {stat.value}
                     </motion.p>
-                    <div className="flex items-center">
+                    <div className="flex items-center mt-1">
                       <TrendingUp
                         className={`w-4 h-4 mr-1 ${
                           stat.changeType === "positive"
@@ -312,18 +344,6 @@ export default function DashboardClient() {
                         vs last week
                       </span>
                     </div>
-                  </div>
-                  <motion.div
-                    initial={{ rotate: -180 }}
-                    animate={{ rotate: 0 }}
-                    transition={{
-                      duration: 0.6,
-                      delay: 0.3 + index * 0.1,
-                      type: "spring",
-                    }}
-                    className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl ${stat.color} flex items-center justify-center shadow-xl transform -rotate-6 hover:rotate-0 transition-transform duration-300`}
-                  >
-                    <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-lg" />
                   </motion.div>
                 </div>
               </motion.div>
@@ -336,20 +356,20 @@ export default function DashboardClient() {
           {quickStats.map((stat, index) => {
             const colors = [
               {
-                bg: "bg-linear-to-br from-yellow-400 to-yellow-500",
-                border: "border-yellow-300",
+                bg: "bg-linear-to-br from-yellow-200 to-yellow-300 hover:from-yellow-300 hover:to-yellow-400",
+                iconBg: "bg-yellow-500",
               },
               {
-                bg: "bg-linear-to-br from-blue-400 to-blue-500",
-                border: "border-blue-300",
+                bg: "bg-linear-to-br from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400",
+                iconBg: "bg-blue-500",
               },
               {
-                bg: "bg-linear-to-br from-green-400 to-green-500",
-                border: "border-green-300",
+                bg: "bg-linear-to-br from-green-200 to-green-300 hover:from-green-300 hover:to-green-400",
+                iconBg: "bg-green-500",
               },
               {
-                bg: "bg-linear-to-br from-purple-400 to-purple-500",
-                border: "border-purple-300",
+                bg: "bg-linear-to-br from-purple-200 to-purple-300 hover:from-purple-300 hover:to-purple-400",
+                iconBg: "bg-purple-500",
               },
             ];
             const colorScheme = colors[index % colors.length];
@@ -357,23 +377,36 @@ export default function DashboardClient() {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                className={`rounded-xl shadow-lg ${colorScheme.bg} ${colorScheme.border} border-2 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105`}
+                className={`rounded p-6 transition-all duration-300 ${colorScheme.bg}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1 }}
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs sm:text-sm font-bold uppercase tracking-wide opacity-90">
+                <div className="flex items-center">
+                  <div
+                    className={`w-12 h-12 ${colorScheme.iconBg} rounded-lg flex items-center justify-center`}
+                  >
+                    <Activity className="w-6 h-6 text-white" />
+                  </div>
+                  <motion.div
+                    className="ml-4"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9 + index * 0.1 }}
+                  >
+                    <motion.p
+                      className="text-sm font-medium text-gray-600"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       {stat.label}
-                    </p>
-                    <p className="text-xl sm:text-2xl font-black mt-2">
+                    </motion.p>
+                    <motion.p
+                      className="text-xl sm:text-2xl font-bold text-gray-900 mt-2"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       {stat.value}
-                    </p>
-                  </div>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/20 flex items-center justify-center shadow-md">
-                    <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                  </div>
+                    </motion.p>
+                  </motion.div>
                 </div>
               </motion.div>
             );
@@ -383,28 +416,48 @@ export default function DashboardClient() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Traffic Chart */}
-          <div className="lg:col-span-2 bg-linear-to-br from-indigo-400 via-purple-500 to-pink-500 rounded-xl shadow-lg border-2 border-indigo-300 p-6 sm:p-8 text-white">
+          <div className="lg:col-span-2 bg-white rounded shadow border border-gray-100 p-6 sm:p-8 text-gray-900">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg sm:text-xl font-bold">Traffic Overview</h3>
               <div className="flex space-x-2">
-                <button className="text-sm px-3 sm:px-4 py-2 bg-white/20 text-white rounded-lg font-medium hover:bg-white/30 transition-colors">
+                <button
+                  onClick={() => setSelectedTab("views")}
+                  className={`text-sm px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors ${
+                    selectedTab === "views"
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
                   Views
                 </button>
-                <button className="text-sm px-3 sm:px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">
+                <button
+                  onClick={() => setSelectedTab("users")}
+                  className={`text-sm px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors ${
+                    selectedTab === "users"
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
                   Users
                 </button>
               </div>
             </div>
             <div className="h-48 sm:h-64 flex items-end justify-between space-x-2">
-              {[65, 78, 52, 89, 94, 76, 85].map((height, index) => (
-                <div
-                  key={index}
-                  className="flex-1 bg-white/30 rounded-t-lg hover:bg-white/40 transition-all duration-300 cursor-pointer shadow-md"
-                  style={{ height: `${height}%` }}
-                ></div>
+              {trafficData[selectedTab].map((height, index) => (
+                <motion.div
+                  key={`${selectedTab}-${index}`}
+                  className={`flex-1 ${
+                    selectedTab === "views"
+                      ? "bg-blue-500 hover:bg-blue-600"
+                      : "bg-green-500 hover:bg-green-600"
+                  } rounded-t-lg transition-all duration-300 cursor-pointer shadow-md`}
+                  initial={{ height: "0%" }}
+                  animate={{ height: `${height}%` }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                ></motion.div>
               ))}
             </div>
-            <div className="flex justify-between text-sm text-white/80 mt-4 font-medium">
+            <div className="flex justify-between text-sm text-gray-600 mt-4 font-medium">
               <span>Mon</span>
               <span>Tue</span>
               <span>Wed</span>
@@ -416,13 +469,13 @@ export default function DashboardClient() {
           </div>
 
           {/* System Alerts */}
-          <div className="bg-linear-to-br from-orange-400 via-red-500 to-pink-500 rounded-xl shadow-lg border-2 border-orange-300 p-6 sm:p-8 text-white">
+          <div className="bg-white rounded shadow border border-gray-100 p-6 sm:p-8 text-gray-900">
             <h3 className="text-lg sm:text-xl font-bold mb-6">System Alerts</h3>
             <div className="space-y-4">
               {systemAlerts.map((alert, index) => (
                 <div
                   key={index}
-                  className="flex items-start space-x-3 p-3 sm:p-4 rounded-lg bg-white/10 border-l-4"
+                  className="flex items-start space-x-3 p-3 sm:p-4 rounded-lg bg-gray-50 border-l-4"
                   style={{
                     borderLeftColor:
                       alert.type === "warning"
@@ -433,8 +486,10 @@ export default function DashboardClient() {
                   }}
                 >
                   <div className="flex-1">
-                    <p className="text-sm font-medium">{alert.message}</p>
-                    <p className="text-xs text-white/70 mt-1">{alert.time}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {alert.message}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">{alert.time}</p>
                   </div>
                 </div>
               ))}
@@ -445,7 +500,7 @@ export default function DashboardClient() {
         {/* Categories and Performance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Top Categories */}
-          <div className="bg-linear-to-br from-teal-400 via-cyan-500 to-blue-500 rounded-xl shadow-lg border-2 border-teal-300 p-6 sm:p-8 text-white">
+          <div className="bg-white rounded shadow border border-gray-100 p-6 sm:p-8 text-gray-900">
             <h3 className="text-lg sm:text-xl font-bold mb-6">
               Top Categories
             </h3>
@@ -457,13 +512,13 @@ export default function DashboardClient() {
                       <span className="text-sm sm:text-base font-semibold">
                         {category.name}
                       </span>
-                      <span className="text-sm font-medium text-white/80">
+                      <span className="text-sm font-medium text-gray-600">
                         {category.articles} articles
                       </span>
                     </div>
-                    <div className="w-full bg-white/30 rounded-full h-3">
+                    <div className="w-full bg-gray-200 rounded-full h-3">
                       <div
-                        className="bg-white/60 h-3 rounded-full transition-all duration-500"
+                        className="bg-blue-500 h-3 rounded-full transition-all duration-500"
                         style={{ width: `${category.percentage}%` }}
                       ></div>
                     </div>
@@ -474,87 +529,92 @@ export default function DashboardClient() {
           </div>
 
           {/* Performance Metrics */}
-          <div className="bg-linear-to-br from-rose-400 via-pink-500 to-purple-500 rounded-xl shadow-lg border-2 border-rose-300 p-6 sm:p-8 text-white">
+          <div className="bg-white rounded shadow border border-gray-100 p-6 sm:p-8 text-gray-900">
             <h3 className="text-lg sm:text-xl font-bold mb-6">
               Performance Metrics
             </h3>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 sm:p-4 bg-white/10 rounded-lg">
+              <div className="flex items-center justify-between p-3 sm:p-4 bg-blue-50 rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
                   <span className="text-sm font-medium">Average Load Time</span>
                 </div>
-                <span className="text-lg font-bold text-green-300">1.2s</span>
+                <span className="text-lg font-bold text-green-600">1.2s</span>
               </div>
-              <div className="flex items-center justify-between p-3 sm:p-4 bg-white/10 rounded-lg">
+              <div className="flex items-center justify-between p-3 sm:p-4 bg-yellow-50 rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <Star className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Star className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
                   <span className="text-sm font-medium">User Satisfaction</span>
                 </div>
-                <span className="text-lg font-bold text-green-300">94%</span>
+                <span className="text-lg font-bold text-green-600">94%</span>
               </div>
-              <div className="flex items-center justify-between p-3 sm:p-4 bg-white/10 rounded-lg">
+              <div className="flex items-center justify-between p-3 sm:p-4 bg-purple-50 rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <Activity className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
                   <span className="text-sm font-medium">Server Uptime</span>
                 </div>
-                <span className="text-lg font-bold text-green-300">99.9%</span>
+                <span className="text-lg font-bold text-green-600">99.9%</span>
               </div>
-              <div className="flex items-center justify-between p-3 sm:p-4 bg-white/10 rounded-lg">
+              <div className="flex items-center justify-between p-3 sm:p-4 bg-red-50 rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" />
                   <span className="text-sm font-medium">Security Score</span>
                 </div>
-                <span className="text-lg font-bold text-green-300">A+</span>
+                <span className="text-lg font-bold text-green-600">A+</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Recent Articles */}
-        <div className="bg-linear-to-br from-slate-400 via-gray-500 to-slate-600 rounded-xl shadow-lg border-2 border-slate-300 p-6 sm:p-8 text-white mb-6 sm:mb-8">
+        <div className="bg-white rounded shadow border border-gray-100 p-6 sm:p-8 text-gray-900 mb-6 sm:mb-8">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg sm:text-xl font-bold">Recent Articles</h3>
             <Link
               href="/dashboard/article"
-              className="text-sm text-white/80 hover:text-white font-semibold flex items-center"
+              className="text-sm text-blue-600 hover:text-blue-800 font-semibold flex items-center"
             >
               View All
               <ArrowUpRight className="w-4 h-4 ml-1" />
             </Link>
           </div>
-          <div className="divide-y divide-white/20">
+          <div className="divide-y divide-gray-200">
             {recentArticles.map((article) => (
               <div
                 key={article.id}
                 className="py-6 sm:py-8 first:pt-0 last:pb-0"
               >
                 <div className="flex items-start justify-between">
+                  <img
+                    className="h-12 w-16 rounded object-cover mr-4"
+                    src={article.thumbnail}
+                    alt=""
+                  />
                   <div className="flex-1">
                     <h4 className="text-base sm:text-lg font-semibold mb-3">
                       {article.title}
                     </h4>
                     <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm mb-3">
                       <span>By {article.author}</span>
-                      <span className="bg-white/20 text-white px-3 py-1 rounded-full font-medium">
+                      <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
                         {article.category}
                       </span>
                       <span>{article.date}</span>
                     </div>
                     <div className="flex items-center space-x-4 sm:space-x-6">
                       <div className="flex items-center space-x-2">
-                        <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
                         <span className="text-sm font-semibold">
                           {article.views}
                         </span>
-                        <span className="text-xs text-white/70">views</span>
+                        <span className="text-xs text-gray-500">views</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
                         <span className="text-sm font-semibold">
                           {article.comments}
                         </span>
-                        <span className="text-xs text-white/70">comments</span>
+                        <span className="text-xs text-gray-500">comments</span>
                       </div>
                     </div>
                   </div>
@@ -562,17 +622,14 @@ export default function DashboardClient() {
                     <span
                       className={`inline-flex items-center px-3 py-2 text-sm font-semibold rounded-full whitespace-nowrap ${
                         article.status === "Published"
-                          ? "bg-green-500/80 text-white"
+                          ? "bg-green-100 text-green-800"
                           : article.status === "Draft"
-                          ? "bg-yellow-500/80 text-white"
-                          : "bg-blue-500/80 text-white"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-blue-100 text-blue-800"
                       }`}
                     >
                       {article.status}
                     </span>
-                    <button className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                      <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
                   </div>
                 </div>
               </div>
@@ -584,7 +641,7 @@ export default function DashboardClient() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <Link
             href="/dashboard/article/add"
-            className="bg-linear-to-br from-green-400 via-emerald-500 to-teal-500 rounded-xl shadow-lg border-2 border-green-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-green-400 via-emerald-500 to-teal-500 rounded shadow-lg  p-4 sm:p-6 text-white hover:shadow transition-all duration-300  group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">
@@ -601,7 +658,7 @@ export default function DashboardClient() {
 
           <Link
             href="/dashboard/breaking"
-            className="bg-linear-to-br from-red-400 via-rose-500 to-pink-500 rounded-xl shadow-lg border-2 border-red-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-red-400 via-rose-500 to-pink-500 rounded shadow  p-4 sm:p-6 text-white  transition-all duration-300  group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">
@@ -618,7 +675,7 @@ export default function DashboardClient() {
 
           <Link
             href="/dashboard/live"
-            className="bg-linear-to-br from-purple-400 via-violet-500 to-purple-600 rounded-xl shadow-lg border-2 border-purple-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-purple-400 via-violet-500 to-purple-600 rounded shadow  p-4 sm:p-6 text-white transition-all duration-300  group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">
@@ -635,7 +692,7 @@ export default function DashboardClient() {
 
           <Link
             href="/dashboard/analytics"
-            className="bg-linear-to-br from-cyan-400 via-blue-500 to-indigo-500 rounded-xl shadow-lg border-2 border-cyan-300 p-4 sm:p-6 text-white hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+            className="bg-linear-to-br from-cyan-400 via-blue-500 to-indigo-500 rounded shadow p-4 sm:p-6 text-white transition-all duration-300 group"
           >
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-colors shadow-lg">

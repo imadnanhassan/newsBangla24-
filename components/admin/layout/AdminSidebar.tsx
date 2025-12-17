@@ -227,7 +227,7 @@ export default function AdminSidebar() {
         </div>
 
         {/* Navigation Menu */}
-        <nav className="flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-slate-700">
+        <nav className="flex-1  overflow-y-auto scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-slate-700">
           <div className="space-y-2">
             {menuItems.map((item, index) => {
               const IconComponent = iconMap[item.icon as keyof typeof iconMap];
@@ -240,7 +240,7 @@ export default function AdminSidebar() {
                 <div key={item.href} className="relative group">
                   <Link
                     href={item.href!}
-                    className={`flex items-center space-x-4 px-4 py-3.5 rounded transition-all duration-300 group relative overflow-hidden ${
+                    className={`flex items-center space-x-4 px-4 py-3 rounded-l-full transition-all duration-300 group relative overflow-hidden ${
                       isActive
                         ? `bg-linear-to-r ${item.color} text-white shadow-lg border border-white/10`
                         : "text-slate-300 hover:bg-slate-800/50 hover:text-white border border-transparent hover:border-slate-700/50"

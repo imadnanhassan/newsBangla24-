@@ -60,9 +60,7 @@ export default function AdminLayout({ children, title }: AdminLayoutProps) {
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto bg-linear-to-br from-slate-50/50 to-gray-50 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
-          <div className=" px-4 sm:px-6 lg:px-8 py-6">
-            {children}
-          </div>
+          {children}
         </main>
       </div>
     </div>
