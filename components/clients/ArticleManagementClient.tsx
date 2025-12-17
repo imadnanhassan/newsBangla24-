@@ -171,30 +171,38 @@ export default function ArticleManagementClient() {
   };
 
   return (
-    <div className="space-y-6 w-full">
+    <div className="space-y-6 w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-            <FileText className="w-8 h-8 mr-3 text-blue-600" />
-            Article Management
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Manage your news articles, drafts, and publications
-          </p>
+      <div className="relative overflow-hidden bg-linear-to-r from-blue-500 to-purple-500 rounded p-8 text-white">
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
+                <FileText className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold">Article Management</h1>
+                <p className="text-white/80 mt-1">
+                  Create and manage your news articles, drafts, and publications
+                </p>
+              </div>
+            </div>
+            <div className="flex space-x-3">
+              <Link className="cursor-pointer" href="/dashboard/article/add">
+                <button className="flex items-center cursor-pointer space-x-3 bg-white text-blue-600 px-6 py-3 rounded font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                  <Plus className="w-5 h-5" />
+                  <span>New Article</span>
+                </button>
+              </Link>
+              <button className="flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <Upload className="w-5 h-5" />
+                <span>Import Articles</span>
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="mt-4 sm:mt-0 flex space-x-3">
-          <Link href="/dashboard/article/add">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-all flex items-center">
-              <Plus className="w-4 h-4 mr-2" />
-              New Article
-            </button>
-          </Link>
-          <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded font-medium hover:bg-gray-200 transition-colors flex items-center">
-            <Upload className="w-4 h-4 mr-2" />
-            Import Articles
-          </button>
-        </div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-32 translate-x-32"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-24 -translate-x-24"></div>
       </div>
 
       {/* Stats Cards */}
