@@ -22,7 +22,8 @@ export default function ArticleManagementClient() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
-  const [selectedArticles, setSelectedArticles] = useState<number[]>([]);
+  const [sortBy, setSortBy] = useState("title");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   // Mock data for news portal articles
   const articles = [
@@ -115,13 +116,34 @@ export default function ArticleManagementClient() {
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
-  const handleSelectArticle = (id: number) => {
-    setSelectedArticles((prev) =>
-      prev.includes(id)
-        ? prev.filter((articleId) => articleId !== id)
-        : [...prev, id]
-    );
-  };
+  const sortedArticles = [...filteredArticles].sort((a, b) => {
+    let aVal, bVal;
+    switch (sortBy) {
+      case "title":
+        aVal = a.title.toLowerCase();
+        bVal = b.title.toLowerCase();
+        break;
+      case "date":
+        aVal = new Date(a.publishDate || 0);
+        bVal = new Date(b.publishDate || 0);
+        break;
+      case "views":
+        aVal = a.views;
+        bVal = b.views;
+        break;
+      case "comments":
+        aVal = a.comments;
+        bVal = b.comments;
+        break;
+      default:
+        return 0;
+    }
+    if (sortOrder === "asc") {
+      return aVal > bVal ? 1 : -1;
+    } else {
+      return aVal < bVal ? 1 : -1;
+    }
+  });
 
   const getStatusBadge = (status: string) => {
     const statusStyles = {
@@ -344,27 +366,33 @@ export default function ArticleManagementClient() {
         </div>
       </div>
 
-      {/* Bulk Actions */}
-      {selectedArticles.length > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-blue-800">
-              {selectedArticles.length} article(s) selected
-            </span>
-            <div className="flex space-x-2">
-              <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
-                Publish
-              </button>
-              <button className="bg-yellow-600 text-white px-3 py-1 rounded text-sm hover:bg-yellow-700">
-                Archive
-              </button>
-              <button className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
-                Delete
-              </button>
-            </div>
-          </div>
+      {/* Sort Options */}
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center space-x-4">
+          <label className="text-sm font-medium text-gray-700">Sort by:</label>
+          <select
+            value={`${sortBy}-${sortOrder}`}
+            onChange={(e) => {
+              const [by, order] = e.target.value.split("-");
+              setSortBy(by);
+              setSortOrder(order);
+            }}
+            className="px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-primary focus:border-primary"
+          >
+            <option value="title-asc">Title A-Z</option>
+            <option value="title-desc">Title Z-A</option>
+            <option value="date-desc">Date Newest</option>
+            <option value="date-asc">Date Oldest</option>
+            <option value="views-desc">Views High to Low</option>
+            <option value="views-asc">Views Low to High</option>
+            <option value="comments-desc">Comments High to Low</option>
+            <option value="comments-asc">Comments Low to High</option>
+          </select>
         </div>
-      )}
+        <div className="text-sm text-gray-500">
+          {sortedArticles.length} articles
+        </div>
+      </div>
 
       {/* Articles Table */}
       <div className="bg-white rounded border border-gray-100 overflow-hidden transition-all duration-300">
@@ -372,9 +400,6 @@ export default function ArticleManagementClient() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  #
-                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Article
                 </th>
@@ -399,19 +424,13 @@ export default function ArticleManagementClient() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredArticles.map((article, index) => (
+              {sortedArticles.map((article, index) => (
                 <tr
                   key={article.id}
-                  className={`cursor-pointer ${
+                  className={`${
                     index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } ${
-                    selectedArticles.includes(article.id) ? "bg-green-200" : ""
                   } hover:bg-gray-100`}
-                  onClick={() => handleSelectArticle(article.id)}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {index + 1}
-                  </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center">
                       <img
@@ -482,21 +501,21 @@ export default function ArticleManagementClient() {
                     <div className="flex items-center space-x-2">
                       <button
                         title="View Article"
-                        className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2 text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg transition-all duration-200 "
                       >
-                        <FileText className="w-4 h-4" />
+                        <Eye className="w-4 h-4" />
                       </button>
                       <Link href={`/dashboard/article/edit/${article.id}`}>
                         <button
                           title="Edit Article"
-                          className="p-2 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors"
+                          className="p-2 text-green-600 hover:text-green-900 bg-green-100 rounded-lg transition-all duration-200 "
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                       </Link>
                       <button
                         title="Delete Article"
-                        className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors"
+                        className="p-2 text-red-600 hover:text-red-900 bg-red-50 rounded-lg transition-all duration-200 "
                         onClick={() => {
                           if (
                             confirm(
