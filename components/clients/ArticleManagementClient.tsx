@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "motion/react";
 import {
   FileText,
   Plus,
@@ -159,7 +160,7 @@ export default function ArticleManagementClient() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -178,7 +179,7 @@ export default function ArticleManagementClient() {
               New Article
             </button>
           </Link>
-          <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center">
+          <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded font-medium hover:bg-gray-200 transition-colors flex items-center">
             <Upload className="w-4 h-4 mr-2" />
             Import Articles
           </button>
@@ -187,54 +188,114 @@ export default function ArticleManagementClient() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-2xl border-3 border-green-100 p-6 hover:border-green-300 transition-all duration-300">
+        <motion.div className="bg-linear-to-br from-green-200 to-green-300 hover:from-green-300 hover:to-green-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
               <CheckCircle className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Published</p>
-              <p className="text-3xl font-bold text-gray-900">2</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Published
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900"
+                whileHover={{ scale: 1.1 }}
+              >
+                2
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
-        <div className="bg-white rounded-2xl border-3 border-yellow-100 p-6 hover:border-yellow-300 transition-all duration-300">
+        </motion.div>
+        <motion.div className="bg-linear-to-br from-yellow-200 to-yellow-300 hover:from-yellow-300 hover:to-yellow-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center">
               <AlertCircle className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">In Review</p>
-              <p className="text-3xl font-bold text-gray-900">1</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                In Review
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900"
+                whileHover={{ scale: 1.1 }}
+              >
+                1
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
-        <div className="bg-white rounded-2xl border-3 border-gray-100 p-6 hover:border-gray-300 transition-all duration-300">
+        </motion.div>
+        <motion.div className="bg-linear-to-br from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gray-500 rounded-lg flex items-center justify-center">
               <FileText className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Drafts</p>
-              <p className="text-3xl font-bold text-gray-900">1</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Drafts
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900"
+                whileHover={{ scale: 1.1 }}
+              >
+                1
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
-        <div className="bg-white rounded-2xl border-3 border-blue-100 p-6 hover:border-blue-300 transition-all duration-300">
+        </motion.div>
+        <motion.div className="bg-linear-to-br from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
               <Calendar className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Scheduled</p>
-              <p className="text-3xl font-bold text-gray-900">1</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Scheduled
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900"
+                whileHover={{ scale: 1.1 }}
+              >
+                1
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white rounded-2xl border-3 border-gray-100 p-6 hover:border-primary/30 transition-all duration-300">
+      <div className="bg-white rounded border border-gray-100 p-6  transition-all duration-300">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -246,7 +307,7 @@ export default function ArticleManagementClient() {
                 placeholder="Search by title or reporter..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-3 py-2.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded focus:outline-none  focus:ring-primary focus:border-primary transition-all"
               />
               <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
             </div>
@@ -258,7 +319,7 @@ export default function ArticleManagementClient() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+              className="w-full px-3 py-2.5 border border-gray-200 rounded focus:outline-none focus:ring-primary focus:border-primary transition-all"
             >
               <option value="all">All Status</option>
               {statuses.map((status) => (
@@ -275,7 +336,7 @@ export default function ArticleManagementClient() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+              className="w-full px-3 py-2.5 border border-gray-200 rounded focus:outline-none  focus:ring-primary focus:border-primary transition-all"
             >
               <option value="all">All Categories</option>
               {categories.map((category) => (
@@ -286,7 +347,7 @@ export default function ArticleManagementClient() {
             </select>
           </div>
           <div className="flex items-end">
-            <button className="w-full bg-gray-100 text-gray-700 px-4 py-2.5 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center">
+            <button className="w-full bg-gray-100 text-gray-700 px-4 py-2.5 rounded font-medium hover:bg-gray-200 transition-colors flex items-center justify-center">
               <Filter className="w-4 h-4 mr-2" />
               Clear Filters
             </button>
@@ -317,20 +378,13 @@ export default function ArticleManagementClient() {
       )}
 
       {/* Articles Table */}
-      <div className="bg-white rounded-2xl border-3 border-gray-100 overflow-hidden hover:border-primary/30 transition-all duration-300">
+      <div className="bg-white rounded border border-gray-100 overflow-hidden transition-all duration-300">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left">
-                  <input
-                    type="checkbox"
-                    checked={
-                      selectedArticles.length === filteredArticles.length
-                    }
-                    onChange={handleSelectAll}
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
-                  />
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  #
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Article
@@ -356,15 +410,18 @@ export default function ArticleManagementClient() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredArticles.map((article) => (
-                <tr key={article.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <input
-                      type="checkbox"
-                      checked={selectedArticles.includes(article.id)}
-                      onChange={() => handleSelectArticle(article.id)}
-                      className="rounded border-gray-300 text-primary focus:ring-primary"
-                    />
+              {filteredArticles.map((article, index) => (
+                <tr
+                  key={article.id}
+                  className={`cursor-pointer ${
+                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                  } ${
+                    selectedArticles.includes(article.id) ? "bg-green-200" : ""
+                  } hover:bg-gray-100`}
+                  onClick={() => handleSelectArticle(article.id)}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {index + 1}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center">
@@ -416,35 +473,11 @@ export default function ArticleManagementClient() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center">
-                        <svg
-                          className="w-4 h-4 text-gray-400 mr-1"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
+                        <Eye className="w-4 h-4 text-gray-400 mr-1" />
                         {article.views.toLocaleString()}
                       </div>
                       <div className="flex items-center">
-                        <svg
-                          className="w-4 h-4 text-gray-400 mr-1"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                          />
-                        </svg>
+                        <MessageSquare className="w-4 h-4 text-gray-400 mr-1" />
                         {article.comments}
                       </div>
                     </div>
@@ -462,7 +495,7 @@ export default function ArticleManagementClient() {
                         title="View Article"
                         className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors"
                       >
-                        <Eye className="w-4 h-4" />
+                        <FileText className="w-4 h-4" />
                       </button>
                       <Link href={`/dashboard/article/edit/${article.id}`}>
                         <button
@@ -498,7 +531,7 @@ export default function ArticleManagementClient() {
       </div>
 
       {/* Pagination */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t-3 border-gray-100 sm:px-6 rounded-2xl border-3 hover:border-primary/30 transition-all duration-300">
+      <div className="bg-white px-4 py-3 flex items-center justify-between  border-gray-100 sm:px-6 rounded border  transition-all duration-300">
         <div className="flex-1 flex justify-between sm:hidden">
           <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
             Previous
