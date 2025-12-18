@@ -1,12 +1,95 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion } from "motion/react";
+import {
+  Users,
+  UserCheck,
+  FileText,
+  TrendingUp,
+  Search,
+  Filter,
+  Eye,
+  Edit,
+  Trash2,
+  Plus,
+  Sparkles,
+  AlertCircle,
+  X,
+} from "lucide-react";
+import { useAdminActions } from "@/lib/hooks/useAdminActions";
 
 export default function ReporterManagementPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [selectedReporters, setSelectedReporters] = useState<number[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const {
+    deleteModalOpen,
+    deleteConfig,
+    handleDeleteConfirm,
+    handleDeleteCancel,
+    confirmDelete,
+  } = useAdminActions();
+
+  // SEO optimization
+  useEffect(() => {
+    document.title = "Reporter Management - NewsBangla24 Admin";
+
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "Manage reporters and journalists for NewsBangla24. Monitor performance, assign roles, and organize editorial staff efficiently."
+      );
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "description";
+      meta.content =
+        "Manage reporters and journalists for NewsBangla24. Monitor performance, assign roles, and organize editorial staff efficiently.";
+      document.head.appendChild(meta);
+    }
+
+    // Set robots meta tag for admin pages
+    const robotsMeta = document.querySelector('meta[name="robots"]');
+    if (robotsMeta) {
+      robotsMeta.setAttribute("content", "noindex, nofollow");
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "robots";
+      meta.content = "noindex, nofollow";
+      document.head.appendChild(meta);
+    }
+
+    // Set keywords
+    const keywordsMeta = document.querySelector('meta[name="keywords"]');
+    if (keywordsMeta) {
+      keywordsMeta.setAttribute(
+        "content",
+        "reporters, journalists, editorial staff, NewsBangla24, admin panel, staff management"
+      );
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "keywords";
+      meta.content =
+        "reporters, journalists, editorial staff, NewsBangla24, admin panel, staff management";
+      document.head.appendChild(meta);
+    }
+  }, []);
+
+  // Handle modal open/close with body scroll lock
+  useEffect(() => {
+    if (deleteModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [deleteModalOpen]);
 
   // Mock data for news portal reporters
   const reporters = [
@@ -24,7 +107,7 @@ export default function ReporterManagementPage() {
       lastActive: "2024-12-15T10:30:00",
       avatar: "/api/placeholder/40/40",
       location: "Dhaka",
-      specialization: ["Politics", "Economics"]
+      specialization: ["Politics", "Economics"],
     },
     {
       id: 2,
@@ -40,7 +123,7 @@ export default function ReporterManagementPage() {
       lastActive: "2024-12-15T08:15:00",
       avatar: "/api/placeholder/40/40",
       location: "Chittagong",
-      specialization: ["Cricket", "Football"]
+      specialization: ["Cricket", "Football"],
     },
     {
       id: 3,
@@ -56,109 +139,211 @@ export default function ReporterManagementPage() {
       lastActive: "2024-12-10T14:20:00",
       avatar: "/api/placeholder/40/40",
       location: "Sylhet",
-      specialization: ["Technology", "Innovation"]
-    }
+      specialization: ["Technology", "Innovation"],
+    },
   ];
 
+  const filteredReporters = reporters.filter((reporter) => {
+    const matchesSearch =
+      reporter.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      reporter.nameEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      reporter.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      reporter.department.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter =
+      statusFilter === "all" || reporter.status === statusFilter;
+    return matchesSearch && matchesFilter;
+  });
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Reporter Management</h1>
-          <p className="text-gray-600">Manage reporters, journalists, and editorial staff</p>
+      <motion.div
+        className="relative overflow-hidden bg-linear-to-r from-teal-600 via-teal-500 to-cyan-500 rounded p-8 text-white shadow"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="flex items-center space-x-4">
+              <motion.div
+                className="p-3 bg-white/20 backdrop-blur-sm rounded shadow"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <Users className="w-8 h-8 text-white" />
+              </motion.div>
+              <div>
+                <motion.h1
+                  className="text-4xl font-bold bg-linear-to-r from-white to-white/80 bg-clip-text"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                >
+                  Reporter Management
+                </motion.h1>
+                <motion.p
+                  className="text-white/90 mt-2 text-lg"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                >
+                  Manage reporters, journalists, and editorial staff
+                </motion.p>
+              </div>
+            </div>
+            <div className="flex space-x-3">
+              <Link className="cursor-pointer" href="/dashboard/reporter/add">
+                <motion.button className="flex items-center cursor-pointer space-x-3 bg-white text-teal-600 px-6 py-3 rounded font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                  <Plus className="w-5 h-5" />
+                  <span>Add Reporter</span>
+                </motion.button>
+              </Link>
+              <motion.button className="flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <Sparkles className="w-5 h-5" />
+                <span>Import Staff</span>
+              </motion.button>
+            </div>
+          </div>
         </div>
-        <div className="mt-4 sm:mt-0 flex space-x-3">
-          <Link href="/dashboard/reporter/create">
-            <button className="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors">
-              <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Add Reporter
-            </button>
-          </Link>
-        </div>
-      </div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full -translate-y-40 translate-x-40 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full translate-y-32 -translate-x-32 animate-pulse"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent animate-shimmer"></div>
+      </motion.div>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <motion.div className="bg-linear-to-br from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
+            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+              <Users className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Reporters</p>
-              <p className="text-2xl font-bold text-gray-900">{reporters.length}</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Total Reporters
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900 mt-1"
+                whileHover={{ scale: 1.1 }}
+              >
+                {reporters.length}
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        </motion.div>
+        <motion.div className="bg-linear-to-br from-green-200 to-green-300 hover:from-green-300 hover:to-green-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+            <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+              <UserCheck className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active</p>
-              <p className="text-2xl font-bold text-gray-900">{reporters.filter(r => r.status === 'Active').length}</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Active
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900 mt-1"
+                whileHover={{ scale: 1.1 }}
+              >
+                {reporters.filter((r) => r.status === "Active").length}
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        </motion.div>
+        <motion.div className="bg-linear-to-br from-yellow-200 to-yellow-300 hover:from-yellow-300 hover:to-yellow-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-yellow-100 rounded-lg">
-              <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+            <div className="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center">
+              <FileText className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Articles</p>
-              <p className="text-2xl font-bold text-gray-900">{reporters.reduce((sum, r) => sum + r.articlesCount, 0)}</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Total Articles
+              </motion.p>
+              <motion.p
+                className="text-3xl font-bold text-gray-900 mt-1"
+                whileHover={{ scale: 1.1 }}
+              >
+                {reporters.reduce((sum, r) => sum + r.articlesCount, 0)}
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        </motion.div>
+        <motion.div className="bg-linear-to-br from-purple-200 to-purple-300 hover:from-purple-300 hover:to-purple-400 rounded p-6 transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
+            <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Top Performer</p>
-              <p className="text-lg font-bold text-gray-900">আহমেদ হাসান</p>
-            </div>
+            <motion.div
+              className="ml-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.p
+                className="text-sm font-medium text-gray-600"
+                whileHover={{ scale: 1.1 }}
+              >
+                Top Performer
+              </motion.p>
+              <motion.p
+                className="text-lg font-bold text-gray-900 mt-1"
+                whileHover={{ scale: 1.1 }}
+              >
+                আহমেদ হাসান
+              </motion.p>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white rounded border border-gray-100 p-6 transition-all duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Search Reporters</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Search Reporters
+            </label>
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search by name, email, or department..."
+                placeholder="Search by name, email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded focus:outline-none focus:ring-primary focus:border-primary transition-all"
               />
-              <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Status
+            </label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              className="w-full px-3 py-2.5 border border-gray-200 rounded focus:outline-none focus:ring-primary focus:border-primary transition-all"
             >
               <option value="all">All Status</option>
               <option value="Active">Active</option>
@@ -166,7 +351,13 @@ export default function ReporterManagementPage() {
             </select>
           </div>
           <div className="flex items-end">
-            <button className="w-full bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+            <button className="w-full bg-gray-100 text-gray-700 px-4 py-2.5 rounded font-medium hover:bg-gray-200 transition-colors flex items-center justify-center">
+              <Filter className="w-4 h-4 mr-2" />
+              Clear Filters
+            </button>
+          </div>
+          <div className="flex items-end">
+            <button className="w-full bg-blue-100 text-blue-700 px-4 py-2.5 rounded font-medium hover:bg-blue-200 transition-colors flex items-center justify-center">
               Export List
             </button>
           </div>
@@ -174,107 +365,258 @@ export default function ReporterManagementPage() {
       </div>
 
       {/* Reporters Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <motion.div
+        className="bg-white rounded border border-gray-100 overflow-hidden transition-all duration-300"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left">
+                <th className="px-6 py-4 text-left">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                    className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
                   />
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Reporter
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Contact
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Department
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Performance
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Last Active
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {reporters.map((reporter) => (
-                <tr key={reporter.id} className="hover:bg-gray-50">
+            <tbody className="bg-white divide-y divide-gray-100">
+              {filteredReporters.map((reporter, index) => (
+                <motion.tr
+                  key={reporter.id}
+                  className="hover:bg-gray-50 transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 + index * 0.05, duration: 0.4 }}
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <input
                       type="checkbox"
-                      className="rounded border-gray-300 text-primary focus:ring-primary"
+                      className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
                     />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <img className="h-10 w-10 rounded-full" src={reporter.avatar} alt="" />
+                      <motion.img
+                        className="h-12 w-12 rounded-full border-2 border-gray-200"
+                        src={reporter.avatar}
+                        alt={reporter.name}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      />
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{reporter.name}</div>
-                        <div className="text-sm text-gray-500">{reporter.designation}</div>
+                        <div className="text-sm font-bold text-gray-900">
+                          {reporter.name}
+                        </div>
+                        <div className="text-sm text-gray-500 font-medium">
+                          {reporter.designation}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{reporter.email}</div>
-                    <div className="text-sm text-gray-500">{reporter.phone}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{reporter.department}</div>
-                    <div className="text-sm text-gray-500">{reporter.location}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{reporter.articlesCount} articles</div>
+                    <div className="text-sm text-gray-900 font-medium">
+                      {reporter.email}
+                    </div>
                     <div className="text-sm text-gray-500">
-                      {reporter.specialization.join(', ')}
+                      {reporter.phone}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      reporter.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
+                    <div className="text-sm text-gray-900 font-medium">
+                      {reporter.department}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {reporter.location}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900 font-medium">
+                      {reporter.articlesCount} articles
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {reporter.specialization.slice(0, 2).join(", ")}
+                      {reporter.specialization.length > 2 && "..."}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
+                        reporter.status === "Active"
+                          ? "bg-green-100 text-green-800 border border-green-200"
+                          : "bg-red-100 text-red-800 border border-red-200"
+                      }`}
+                    >
                       {reporter.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(reporter.lastActive).toLocaleDateString('bn-BD')}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                    {new Date(reporter.lastActive).toLocaleDateString("bn-BD")}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-2">
-                      <button className="text-blue-600 hover:text-blue-900">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                      </button>
-                      <button className="text-green-600 hover:text-green-900">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                      </button>
-                      <button className="text-red-600 hover:text-red-900">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                      <Link href={`/dashboard/reporter/${reporter.id}`}>
+                        <button
+                          title="View Reporter"
+                          className="p-2 text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg transition-all duration-200"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+                      </Link>
+                      <Link href={`/dashboard/reporter/edit/${reporter.id}`}>
+                        <button
+                          title="Edit Reporter"
+                          className="p-2 text-green-600 hover:text-green-900 bg-green-100 rounded-lg transition-all duration-200"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                      </Link>
+                      <button
+                        title="Delete Reporter"
+                        className="p-2 text-red-600 hover:text-red-900 bg-red-50 rounded-lg transition-all duration-200"
+                        onClick={() =>
+                          confirmDelete({
+                            itemName: reporter.name,
+                            itemType: "reporter",
+                            additionalInfo: `${reporter.articlesCount} articles will be affected`,
+                            onConfirm: async () => {
+                              // Simulate API call
+                              await new Promise((resolve) =>
+                                setTimeout(resolve, 1000)
+                              );
+                              console.log("Deleting reporter:", reporter.id);
+                            },
+                          })
+                        }
+                      >
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && deleteConfig && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={handleDeleteCancel}
+        >
+          <motion.div
+            className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-red-100 rounded-full">
+                    <Users className="w-7 h-7 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Delete {deleteConfig.itemType}
+                    </h3>
+                    <p className="text-sm text-gray-500 mt-1">
+                      This action cannot be undone
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleDeleteCancel}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X className="w-6 h-6 text-gray-400" />
+                </button>
+              </div>
+
+              <div className="mb-6">
+                <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                  <p className="text-gray-700">
+                    Are you sure you want to delete{" "}
+                    <span className="font-semibold text-gray-900">
+                      "{deleteConfig.itemName}"
+                    </span>
+                    ?
+                  </p>
+                </div>
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                  <div className="flex items-start space-x-3">
+                    <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5" />
+                    <div className="text-sm text-yellow-800">
+                      <p className="font-medium mb-1">Permission Required</p>
+                      <p>
+                        You need <strong>Administrator</strong> or{" "}
+                        <strong>HR Manager</strong> permissions to delete
+                        {deleteConfig.itemType}s. This action cannot be undone.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {deleteConfig.additionalInfo && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div className="flex items-start space-x-3">
+                      <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
+                      <div className="text-sm text-red-800">
+                        <p className="font-medium mb-1">Warning</p>
+                        <p>{deleteConfig.additionalInfo}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={handleDeleteCancel}
+                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteConfirm}
+                  className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+                >
+                  Delete {deleteConfig.itemType}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

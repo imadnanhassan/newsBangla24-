@@ -1,87 +1,51 @@
-// Analytics and reporting types
-export interface AnalyticsData {
-  totalViews: number;
-  totalComments: number;
-  totalShares: number;
-  totalReaders: number;
-  viewsChange: number;
-  commentsChange: number;
-  sharesChange: number;
-  readersChange: number;
-  period: 'day' | 'week' | 'month' | 'year';
-  startDate: string;
-  endDate: string;
+export interface AnalyticsStat {
+  title: string;
+  value: string;
+  change: string;
+  changeType: "positive" | "negative";
+  icon: any;
 }
 
-export interface ViewsData {
-  date: string;
-  views: number;
-  uniqueViews: number;
-  bounceRate: number;
-  avgTimeOnPage: number;
-}
-
-export interface EngagementData {
-  articleId: string;
+export interface TopArticle {
   title: string;
   views: number;
-  likes: number;
-  shares: number;
-  comments: number;
-  readingTime: number;
-  engagementRate: number;
-  publishedAt: string;
-}
-
-export interface DeviceStats {
-  device: 'mobile' | 'desktop' | 'tablet';
-  percentage: number;
-  sessions: number;
-  bounceRate: number;
+  change: string;
 }
 
 export interface TrafficSource {
-  source: 'direct' | 'social' | 'search' | 'referral' | 'email';
-  sessions: number;
+  source: string;
   percentage: number;
-  bounceRate: number;
+  visitors: number;
 }
 
-export interface GeographicData {
-  country: string;
-  countryCode: string;
-  sessions: number;
+export interface DeviceStat {
+  device: string;
   percentage: number;
-  avgSessionDuration: number;
+  icon: any;
 }
 
-export interface PerformanceMetrics {
-  totalArticles: number;
-  publishedArticles: number;
-  avgViewsPerArticle: number;
-  avgEngagementRate: number;
-  topPerformingArticle: {
-    id: string;
-    title: string;
-    views: number;
-  };
-  recentActivity: ActivityItem[];
+export interface RealTimeActivity {
+  activeUsers: number;
+  pagesPerSession: number;
+  avgSessionTime: string;
 }
 
-export interface ActivityItem {
-  id: string;
-  type: 'article_published' | 'comment_received' | 'article_shared' | 'milestone_reached';
-  title: string;
-  description: string;
-  timestamp: string;
-  metadata?: Record<string, any>;
+export interface AnalyticsData {
+  stats: AnalyticsStat[];
+  topArticles: TopArticle[];
+  trafficSources: TrafficSource[];
+  deviceStats: DeviceStat[];
+  realTimeActivity: RealTimeActivity;
+  timeRange: string;
 }
 
-export interface AnalyticsFilter {
-  period: 'day' | 'week' | 'month' | 'year';
-  startDate?: string;
-  endDate?: string;
-  articleIds?: string[];
-  categories?: string[];
-  authors?: string[];
+export interface AnalyticsMetrics {
+  totalPageViews: number;
+  uniqueVisitors: number;
+  avgSessionDuration: string;
+  bounceRate: string;
+  pageViewsChange: number;
+  visitorsChange: number;
+  sessionChange: number;
+  bounceChange: number;
 }

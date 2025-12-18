@@ -1,61 +1,33 @@
-// Notification related types
-export type NotificationType = 
-  | 'comment' 
-  | 'like' 
-  | 'share' 
-  | 'view_milestone' 
-  | 'article_approved' 
-  | 'article_rejected' 
-  | 'system_update' 
-  | 'reminder'
-  | 'mention'
-  | 'follow';
-
 export interface Notification {
-  id: string;
-  type: NotificationType;
+  id: number;
   title: string;
   message: string;
-  read: boolean;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-  metadata?: NotificationMetadata;
-  actionUrl?: string;
-  expiresAt?: string;
+  type: "breaking" | "digest" | "sports" | "weather" | "general";
+  status: "sent" | "scheduled" | "draft" | "failed";
+  recipients: number;
+  sentAt?: string;
+  scheduledAt?: string;
+  createdAt?: string;
+  openRate: number;
 }
 
-export interface NotificationMetadata {
-  articleId?: string;
-  commentId?: string;
-  userId?: string;
-  userName?: string;
-  userAvatar?: string;
-  count?: number;
-  milestone?: number;
-  [key: string]: any;
+export type NotificationStatus = Notification["status"];
+export type NotificationType = Notification["type"];
+
+export interface NotificationStats {
+  totalSent: number;
+  subscribers: number;
+  openRate: number;
+  scheduled: number;
 }
 
-export interface NotificationPreferences {
-  email: boolean;
-  push: boolean;
-  inApp: boolean;
-  types: {
-    [K in NotificationType]: boolean;
-  };
-  frequency: 'immediate' | 'hourly' | 'daily' | 'weekly';
-  quietHours?: {
-    enabled: boolean;
-    start: string; // HH:mm format
-    end: string;   // HH:mm format
-  };
-}
-
-export interface NotificationFilter {
-  read?: boolean;
-  type?: NotificationType;
-  dateFrom?: string;
-  dateTo?: string;
-  page?: number;
-  limit?: number;
+export interface NotificationAnalytics {
+  totalDeliveries: number;
+  averageOpenRate: number;
+  clickThroughRate: number;
+  bounceRate: number;
+  deliveryChange: number;
+  openRateChange: number;
+  clickRateChange: number;
+  bounceRateChange: number;
 }
