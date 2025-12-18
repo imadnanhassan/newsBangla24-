@@ -59,7 +59,7 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
 
   if (!mounted || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-slate-800 to-slate-900">
         <div className="text-center">
           <div className="relative">
             <div className="w-20 h-20 border-4 border-red-500/30 rounded-full animate-spin border-t-red-500"></div>
@@ -76,13 +76,13 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
   }
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 flex overflow-hidden">
+    <div className="h-screen bg-linear-to-br from-slate-50 via-gray-50 to-slate-100 flex overflow-hidden">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm" 
-            onClick={() => setSidebarOpen(false)} 
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSidebarOpen(false)}
           />
           <div className="relative flex-1 flex flex-col max-w-xs w-full h-full">
             <div className="absolute top-4 right-4 z-10">
@@ -99,14 +99,14 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
       )}
 
       {/* Desktop sidebar - Fixed position */}
-      <div className="hidden lg:flex lg:flex-shrink-0 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30">
+      <div className="hidden lg:flex lg:shrink-0 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30">
         <ReporterSidebar />
       </div>
 
       {/* Main content - Offset by sidebar width */}
       <div className="flex-1 flex flex-col lg:ml-72">
         {/* Top header - Fixed */}
-        <header className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-slate-200/50 sticky top-0 z-40 flex-shrink-0">
+        <header className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-slate-200/50 sticky top-0 z-40 shrink-0">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4">
               <div className="flex items-center space-x-4">
@@ -116,17 +116,17 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
                 >
                   <Menu className="h-6 w-6" />
                 </button>
-                
+
                 <div>
-                  <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                    {title || 'রিপোর্টার ড্যাশবোর্ড'}
+                  <h1 className="text-2xl font-bold bg-linear-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                    {title || "রিপোর্টার ড্যাশবোর্ড"}
                   </h1>
                   <p className="text-sm text-slate-500 font-medium">
-                    {new Date().toLocaleDateString('bn-BD', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    {new Date().toLocaleDateString("bn-BD", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </p>
                 </div>
@@ -144,12 +144,18 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
                 </div>
 
                 {/* Fullscreen Toggle */}
-                <button 
+                <button
                   onClick={toggleFullscreen}
                   className="p-2.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all duration-200"
-                  title={isFullscreen ? 'ফুলস্ক্রিন থেকে বের হন' : 'ফুলস্ক্রিন করুন'}
+                  title={
+                    isFullscreen ? "ফুলস্ক্রিন থেকে বের হন" : "ফুলস্ক্রিন করুন"
+                  }
                 >
-                  {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+                  {isFullscreen ? (
+                    <Minimize2 className="w-5 h-5" />
+                  ) : (
+                    <Maximize2 className="w-5 h-5" />
+                  )}
                 </button>
 
                 {/* Notifications */}
@@ -166,34 +172,50 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
                     className="flex items-center space-x-3 p-2 rounded-xl hover:bg-slate-100 transition-all duration-200 group"
                   >
                     <div className="hidden md:block text-right">
-                      <p className="text-sm font-semibold text-slate-900">{user.name}</p>
-                      <p className="text-xs text-slate-500 font-medium">প্রফেশনাল রিপোর্টার</p>
+                      <p className="text-sm font-semibold text-slate-900">
+                        {user.name}
+                      </p>
+                      <p className="text-xs text-slate-500 font-medium">
+                        প্রফেশনাল রিপোর্টার
+                      </p>
                     </div>
                     <div className="relative">
-                      <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <div className="w-10 h-10 bg-linear-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
                         <span className="text-white text-sm font-bold">
-                          {user.name?.charAt(0) || 'R'}
+                          {user.name?.charAt(0) || "R"}
                         </span>
                       </div>
                       <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
                     </div>
-                    <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${userMenuOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
+                        userMenuOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
 
                   {/* User Dropdown */}
                   {userMenuOpen && (
                     <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 z-50 animate-in slide-in-from-top-2 duration-200">
                       <div className="px-4 py-3 border-b border-slate-100">
-                        <p className="font-semibold text-slate-900">{user.name}</p>
+                        <p className="font-semibold text-slate-900">
+                          {user.name}
+                        </p>
                         <p className="text-sm text-slate-500">{user.email}</p>
                       </div>
-                      
+
                       <div className="py-2">
-                        <a href="/reporter/profile" className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                        <a
+                          href="/reporter/profile"
+                          className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                        >
                           <User className="w-4 h-4" />
                           <span>প্রোফাইল দেখুন</span>
                         </a>
-                        <a href="/reporter/settings" className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                        <a
+                          href="/reporter/settings"
+                          className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                        >
                           <Settings className="w-4 h-4" />
                           <span>সেটিংস</span>
                         </a>
@@ -215,19 +237,17 @@ export default function ReporterLayout({ children, title }: ReporterLayoutProps)
         </header>
 
         {/* Page content - Scrollable */}
-        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-slate-50/50 to-gray-50 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
-          <div className="px-4 sm:px-6 lg:px-8 py-8">
-            <div className="max-w-7xl mx-auto">
-              {children}
-            </div>
-          </div>
+        <main className="flex-1 overflow-y-auto bg-linear-to-br from-slate-50/50 to-gray-50 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
+          
+          {children}
+         
         </main>
       </div>
 
       {/* Click outside to close user menu */}
       {userMenuOpen && (
-        <div 
-          className="fixed inset-0 z-30" 
+        <div
+          className="fixed inset-0 z-30"
           onClick={() => setUserMenuOpen(false)}
         />
       )}
