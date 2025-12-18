@@ -507,12 +507,7 @@ export default function ArticleManagementClient() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-2">
-                      <button
-                        title="View Article"
-                        className="p-2 text-blue-600 hover:text-blue-900 bg-blue-100 rounded-lg transition-all duration-200 "
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
+                      
                       <Link href={`/dashboard/article/edit/${article.id}`}>
                         <button
                           title="Edit Article"
