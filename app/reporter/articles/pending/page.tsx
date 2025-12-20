@@ -135,7 +135,12 @@ export default function PendingPage() {
     <ReporterLayout title="পর্যালোচনায় নিবন্ধ">
       <div className="min-h-screen bg-gray-50">
         {/* Welcome Header */}
-        <div className="bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 text-white">
+        <motion.div
+          className="relative overflow-hidden bg-linear-to-r from-orange-500 to-red-500 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 text-white shadow-lg"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
             <div className="flex flex-col gap-4">
               <div className="flex-1 min-w-0">
@@ -148,7 +153,10 @@ export default function PendingPage() {
               </div>
             </div>
           </div>
-        </div>
+          <div className="absolute top-0 right-0 w-40 sm:w-80 h-40 sm:h-80 bg-white/10 rounded-full -translate-y-20 sm:-translate-y-40 translate-x-20 sm:translate-x-40 animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-32 sm:w-64 h-32 sm:h-64 bg-white/10 rounded-full translate-y-16 sm:translate-y-32 -translate-x-16 sm:-translate-x-32 animate-pulse"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent animate-shimmer"></div>
+        </motion.div>
 
         <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="space-y-6">
@@ -227,26 +235,26 @@ export default function PendingPage() {
 
             {/* Search */}
             <motion.div
-              className="bg-white p-6 rounded border border-gray-200 shadow"
+              className="bg-white p-4 sm:p-6 rounded-lg border border-gray-100 shadow-sm transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   type="text"
                   placeholder="পর্যালোচনায় নিবন্ধ খুঁজুন..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
+                  className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm sm:text-base transition-all"
                 />
               </div>
             </motion.div>
 
             {/* Articles List */}
             <motion.div
-              className="bg-white rounded border border-gray-200 shadow overflow-hidden"
+              className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
@@ -257,10 +265,11 @@ export default function PendingPage() {
                   return (
                     <motion.div
                       key={article.id}
-                      className="p-6 hover:bg-gray-50 transition-colors"
+                      className="p-4 sm:p-6 hover:bg-gray-50 transition-all duration-300 hover:shadow-md"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
+                      whileHover={{ scale: 1.005 }}
                     >
                       <div className="flex items-start space-x-4">
                         {/* Article Image */}
@@ -375,21 +384,21 @@ export default function PendingPage() {
 
             {/* Guidelines */}
             <motion.div
-              className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded p-8 shadow"
+              className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-6 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
               <motion.h3
-                className="text-xl font-bold text-blue-900 mb-6 flex items-center"
+                className="text-lg sm:text-xl font-bold text-blue-900 mb-4 sm:mb-6 flex items-center"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.9, duration: 0.5 }}
               >
-                <Sparkles className="w-6 h-6 mr-3 text-blue-600" />
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mr-3 text-blue-600" />
                 পর্যালোচনা প্রক্রিয়া
               </motion.h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
                 {[
                   {
                     step: "১",
@@ -411,10 +420,11 @@ export default function PendingPage() {
                 ].map((item, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-start space-x-4"
+                    className="flex items-start space-x-4 hover:shadow-md transition-all duration-300 p-2 rounded-lg"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.0 + index * 0.1, duration: 0.5 }}
+                    whileHover={{ scale: 1.02 }}
                   >
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0 shadow">
                       <span className="text-blue-600 font-bold">

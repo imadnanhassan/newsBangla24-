@@ -14,8 +14,6 @@ import {
   FileText,
   X,
   AlertTriangle,
-  BarChart3,
-  TrendingUp,
 } from "lucide-react";
 
 interface Article {
@@ -78,7 +76,7 @@ export default function RejectedPage() {
     <ReporterLayout title="প্রত্যাখ্যাত নিবন্ধ">
       <div className="min-h-screen bg-gray-50">
         <motion.div
-          className="relative overflow-hidden bg-linear-to-r from-orange-500 via-red-500 to-red-600 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 p-4 sm:p-6 lg:p-8 text-white shadow-lg"
+          className="relative overflow-hidden bg-linear-to-r from-purple-500 to-indigo-500 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 p-4 sm:p-6 lg:p-8 text-white shadow-lg"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -118,7 +116,7 @@ export default function RejectedPage() {
                 >
                   <Link
                     href="/reporter/articles/create"
-                    className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-red-600 rounded-lg hover:bg-red-50 transition-all shadow-lg font-semibold text-sm sm:text-base"
+                    className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-purple-600 rounded-lg hover:bg-gray-50 transition-all shadow-lg font-semibold text-sm sm:text-base"
                   >
                     <FileText className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     নতুন নিবন্ধ লিখুন
@@ -136,55 +134,88 @@ export default function RejectedPage() {
           <div className="space-y-6">
             {/* Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              <div className="bg-white p-4 sm:p-5 lg:p-6 rounded-lg border shadow-sm">
+              <motion.div className="bg-linear-to-br from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 p-4 sm:p-5 lg:p-6 rounded  shadow-sm transition-all duration-300">
                 <div className="flex items-center">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-500 rounded-lg flex items-center justify-center shrink-0">
                     <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">
+                  <motion.div
+                    className="ml-3 sm:ml-4 min-w-0 flex-1"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <motion.p
+                      className="text-xs sm:text-sm font-medium text-gray-600 truncate"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       মোট প্রত্যাখ্যাত
-                    </p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+                    </motion.p>
+                    <motion.p
+                      className="text-2xl sm:text-3xl font-bold text-gray-900"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       {articles.length}
-                    </p>
-                  </div>
+                    </motion.p>
+                  </motion.div>
                 </div>
-              </div>
-              <div className="bg-white p-4 sm:p-5 lg:p-6 rounded-lg border shadow-sm">
+              </motion.div>
+              <motion.div className="bg-linear-to-br from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 p-4 sm:p-5 lg:p-6 rounded  shadow-sm transition-all duration-300">
                 <div className="flex items-center">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-lg flex items-center justify-center shrink-0">
                     <RefreshCw className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">
+                  <motion.div
+                    className="ml-3 sm:ml-4 min-w-0 flex-1"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <motion.p
+                      className="text-xs sm:text-sm font-medium text-gray-600 truncate"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       পুনরায় জমা দেওয়া যাবে
-                    </p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+                    </motion.p>
+                    <motion.p
+                      className="text-2xl sm:text-3xl font-bold text-gray-900"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       {articles.filter((a) => a.canResubmit).length}
-                    </p>
-                  </div>
+                    </motion.p>
+                  </motion.div>
                 </div>
-              </div>
-              <div className="bg-white p-4 sm:p-5 lg:p-6 rounded-lg border shadow-sm">
+              </motion.div>
+              <motion.div className="bg-linear-to-br from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 p-4 sm:p-5 lg:p-6 rounded  shadow-sm transition-all duration-300">
                 <div className="flex items-center">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 rounded-lg flex items-center justify-center shrink-0">
                     <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">
+                  <motion.div
+                    className="ml-3 sm:ml-4 min-w-0 flex-1"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <motion.p
+                      className="text-xs sm:text-sm font-medium text-gray-600 truncate"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       মতামত পাওয়া
-                    </p>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900">
+                    </motion.p>
+                    <motion.p
+                      className="text-2xl sm:text-3xl font-bold text-gray-900"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       {articles.filter((a) => a.feedback).length}
-                    </p>
-                  </div>
+                    </motion.p>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Search */}
-            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
@@ -192,17 +223,20 @@ export default function RejectedPage() {
                   placeholder="প্রত্যাখ্যাত নিবন্ধ খুঁজুন..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent shadow-sm text-sm sm:text-base"
+                  className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm sm:text-base transition-all"
                 />
               </div>
             </div>
 
             {/* Articles List */}
             <div className="space-y-4 sm:space-y-6">
-              {filteredArticles.map((article) => (
-                <div
+              {filteredArticles.map((article, index) => (
+                <motion.div
                   key={article.id}
-                  className="bg-white rounded-lg border shadow-sm overflow-hidden"
+                  className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-gray-200"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                 >
                   <div className="p-4 sm:p-6">
                     <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
@@ -293,12 +327,17 @@ export default function RejectedPage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {filteredArticles.length === 0 && (
-              <div className="bg-white rounded-lg border shadow-sm p-8 sm:p-12 text-center">
+              <motion.div
+                className="bg-white rounded-lg border border-gray-100 shadow-sm p-8 sm:p-12 text-center transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                   কোনো প্রত্যাখ্যাত নিবন্ধ নেই
@@ -315,16 +354,24 @@ export default function RejectedPage() {
                   <FileText className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   নতুন নিবন্ধ লিখুন
                 </Link>
-              </div>
+              </motion.div>
             )}
 
             {/* Improvement Tips */}
-            <div className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-6">
+            <motion.div
+              className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-6 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
               <h3 className="text-lg sm:text-xl font-semibold text-blue-900 mb-4">
                 নিবন্ধ উন্নত করার টিপস
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200">
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     তথ্য যাচাই
                   </h4>
@@ -332,33 +379,42 @@ export default function RejectedPage() {
                     সব তথ্যের বিশ্বস্ত উৎস উল্লেখ করুন এবং পরিসংখ্যান যাচাই করে
                     নিন।
                   </p>
-                </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200">
+                </motion.div>
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     সংক্ষিপ্ত লেখা
                   </h4>
                   <p className="text-xs sm:text-sm text-blue-700">
                     পাঠকের আগ্রহ ধরে রাখতে সংক্ষিপ্ত এবং প্রাসঙ্গিক লেখুন।
                   </p>
-                </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200">
+                </motion.div>
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     ভাষা পরিশোধন
                   </h4>
                   <p className="text-xs sm:text-sm text-blue-700">
                     বানান, ব্যাকরণ এবং ভাষা পরীক্ষা করে নিন।
                   </p>
-                </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200">
+                </motion.div>
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     মূল্যবান কনটেন্ট
                   </h4>
                   <p className="text-xs sm:text-sm text-blue-700">
                     পাঠকের জন্য মূল্যবান তথ্য এবং অন্তর্দৃষ্টি প্রদান করুন।
                   </p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

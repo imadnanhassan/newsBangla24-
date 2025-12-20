@@ -196,11 +196,21 @@ const iconMap = {
 export default function ReporterSidebar() {
   const pathname = usePathname();
   const [expandedItems, setExpandedItems] = useState<string[]>(["articles"]);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const itemsToExpand: string[] = [];
+    navigation.forEach((item) => {
+      if (item.children) {
+        const hasActiveChild = item.children.some((child) =>
+          isActive(child.href!)
+        );
+        if (hasActiveChild) {
+          itemsToExpand.push(item.id);
+        }
+      }
+    });
+    setExpandedItems((prev) => [...new Set([...prev, ...itemsToExpand])]);
+  }, [pathname]);
 
   const toggleExpanded = (id: string) => {
     setExpandedItems((prev) =>
@@ -208,29 +218,16 @@ export default function ReporterSidebar() {
     );
   };
 
-  const isActive = (href: string) => {
+  const isActive = (href: string, exact: boolean = false) => {
+    if (exact) {
+      return pathname === href;
+    }
     return pathname === href || pathname.startsWith(href + "/");
   };
 
   const isExpanded = (id: string) => {
     return expandedItems.includes(id);
   };
-
-  if (!mounted) {
-    return (
-      <div className="w-72 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 backdrop-blur-xl h-full border-r border-slate-800/50 shadow-2xl shadow-black/20">
-        <div className="absolute inset-0 bg-linear-to-r from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none" />
-        <div className="animate-pulse p-6">
-          <div className="h-12 bg-slate-700 rounded-lg mb-4"></div>
-          <div className="space-y-3">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="h-10 bg-slate-700 rounded-lg"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="w-72 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 backdrop-blur-xl border-r border-slate-800/50 shadow-2xl shadow-black/20 h-full flex flex-col overflow-hidden relative">
@@ -331,7 +328,7 @@ export default function ReporterSidebar() {
                             key={child.id}
                             href={child.href!}
                             className={`flex items-center space-x-3 px-3 py-2 text-sm rounded-md transition-all duration-300 group ${
-                              isActive(child.href!)
+                              isActive(child.href!, child.href === item.href)
                                 ? "bg-slate-700/50 text-white border-l-2 border-cyan-500"
                                 : "text-slate-400 hover:bg-slate-800/30 hover:text-slate-200 border-l-2 border-transparent hover:border-slate-500/50"
                             }`}

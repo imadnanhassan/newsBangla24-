@@ -153,14 +153,19 @@ export default function ArticlesPage() {
     <ReporterLayout title="নিবন্ধ পরিচালনা">
       <div className="min-h-screen bg-gray-50">
         {/* Welcome Header */}
-        <div className="bg-linear-to-r from-red-500 via-red-600 to-red-700 text-white">
+        <motion.div
+          className="relative overflow-hidden bg-linear-to-r from-green-500 to-emerald-500 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 text-white shadow-lg"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">
                   আমার নিবন্ধসমূহ 📝
                 </h1>
-                <p className="text-sm sm:text-base lg:text-lg text-red-100 max-w-2xl">
+                <p className="text-sm sm:text-base lg:text-lg text-green-100 max-w-2xl">
                   আপনার সব নিবন্ধ এক জায়গায় পরিচালনা করুন এবং তাদের অগ্রগতি
                   নিরীক্ষণ করুন
                 </p>
@@ -168,7 +173,7 @@ export default function ArticlesPage() {
               <div className="shrink-0">
                 <Link
                   href="/reporter/articles/create"
-                  className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-red-600 rounded-lg hover:bg-red-50 transition-all shadow-lg font-semibold text-sm sm:text-base"
+                  className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-green-600 rounded-lg hover:bg-green-50 transition-all shadow-lg font-semibold text-sm sm:text-base"
                 >
                   <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   নতুন নিবন্ধ
@@ -176,7 +181,10 @@ export default function ArticlesPage() {
               </div>
             </div>
           </div>
-        </div>
+          <div className="absolute top-0 right-0 w-40 sm:w-80 h-40 sm:h-80 bg-white/10 rounded-full -translate-y-20 sm:-translate-y-40 translate-x-20 sm:translate-x-40 animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-32 sm:w-64 h-32 sm:h-64 bg-white/10 rounded-full translate-y-16 sm:translate-y-32 -translate-x-16 sm:-translate-x-32 animate-pulse"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent animate-shimmer"></div>
+        </motion.div>
 
         <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="space-y-6">
@@ -273,7 +281,7 @@ export default function ArticlesPage() {
                     placeholder="নিবন্ধ খুঁজুন..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent shadow-sm text-sm sm:text-base"
+                    className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm text-sm sm:text-base"
                   />
                 </div>
 
@@ -283,7 +291,7 @@ export default function ArticlesPage() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent shadow-sm bg-white text-sm sm:text-base"
+                    className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm bg-white text-sm sm:text-base"
                   >
                     <option value="all">সব স্ট্যাটাস</option>
                     <option value="draft">খসড়া</option>
@@ -442,7 +450,7 @@ export default function ArticlesPage() {
                   </p>
                   <Link
                     href="/reporter/articles/create"
-                    className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all shadow-lg font-semibold"
+                    className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all shadow-lg font-semibold"
                   >
                     <Plus className="w-5 h-5 mr-2" />
                     {searchTerm ||
@@ -528,7 +536,7 @@ export default function ArticlesPage() {
                   <button className="px-3 sm:px-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors">
                     পূর্বের
                   </button>
-                  <button className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                  <button className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                     1
                   </button>
                   <button className="px-3 sm:px-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">

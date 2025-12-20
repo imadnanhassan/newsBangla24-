@@ -137,20 +137,28 @@ export default function CreateArticlePage() {
     <ReporterLayout title="নতুন নিবন্ধ তৈরি">
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <div className="bg-linear-to-r from-red-500 via-red-600 to-red-700 text-white">
+        <motion.div
+          className="relative overflow-hidden bg-linear-to-r from-blue-500 to-purple-500 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 text-white shadow-lg"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
             <div className="flex flex-col gap-4">
               <div className="flex-1 min-w-0">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">
                   নতুন নিবন্ধ তৈরি ✍️
                 </h1>
-                <p className="text-sm sm:text-base lg:text-lg text-red-100 max-w-2xl">
+                <p className="text-sm sm:text-base lg:text-lg text-blue-100 max-w-2xl">
                   আপনার চিন্তাভাবনা এবং সংবাদ শেয়ার করুন
                 </p>
               </div>
             </div>
           </div>
-        </div>
+          <div className="absolute top-0 right-0 w-40 sm:w-80 h-40 sm:h-80 bg-white/10 rounded-full -translate-y-20 sm:-translate-y-40 translate-x-20 sm:translate-x-40 animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-32 sm:w-64 h-32 sm:h-64 bg-white/10 rounded-full translate-y-16 sm:translate-y-32 -translate-x-16 sm:-translate-x-32 animate-pulse"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent animate-shimmer"></div>
+        </motion.div>
 
         <div className="px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -169,7 +177,7 @@ export default function CreateArticlePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8, duration: 0.5 }}
                 >
-                  <FileText className="w-6 h-6 mr-3 text-red-600" />
+                  <FileText className="w-6 h-6 mr-3 text-blue-600" />
                   নিবন্ধের বিষয়বস্তু
                 </motion.h3>
 
@@ -189,9 +197,9 @@ export default function CreateArticlePage() {
                         handleInputChange("title", e.target.value)
                       }
                       placeholder="আকর্ষণীয় শিরোনাম লিখুন..."
-                      className={`w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-md font-normal placeholder-gray-400 ${
+                      className={`w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-md font-normal placeholder-gray-400 ${
                         errors.title
-                          ? "border-red-300 focus:border-red-500 focus:ring-red-100"
+                          ? "border-red-300 focus:border-blue-500 focus:ring-blue-100"
                           : "border-gray-200"
                       }`}
                     />
@@ -221,7 +229,7 @@ export default function CreateArticlePage() {
                         handleInputChange("subtitle", e.target.value)
                       }
                       placeholder="নিবন্ধের উপ-শিরোনাম..."
-                      className="w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
+                      className="w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
                     />
                   </motion.div>
 
@@ -281,7 +289,7 @@ export default function CreateArticlePage() {
                       }
                       placeholder="নিবন্ধের সংক্ষিপ্ত বিবরণ..."
                       rows={4}
-                      className="w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
+                      className="w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
                     />
                   </motion.div>
                 </div>
@@ -349,13 +357,13 @@ export default function CreateArticlePage() {
                   ) : (
                     <motion.div
                       onClick={() => fileInputRef.current?.click()}
-                      className="border-2 border-dashed border-gray-300 rounded p-12 text-center cursor-pointer hover:border-red-500 hover:bg-linear-to-br hover:from-red-50 hover:to-red-100 transition-all duration-300 group"
+                      className="border-2 border-dashed border-gray-300 rounded p-12 text-center cursor-pointer hover:border-blue-500 hover:bg-linear-to-br hover:from-blue-50 hover:to-blue-100 transition-all duration-300 group"
                       whileTap={{ scale: 0.98 }}
                     >
                       <motion.div className="w-16 h-16 bg-gray-100 rounded flex items-center justify-center mx-auto mb-6 group-hover:bg-red-100 transition-colors">
-                        <Upload className="w-8 h-8 text-gray-400 group-hover:text-red-500 transition-colors" />
+                        <Upload className="w-8 h-8 text-gray-400 group-hover:text-blue-500 transition-colors" />
                       </motion.div>
-                      <p className="text-gray-600 group-hover:text-red-600 transition-colors text-lg font-medium mb-2">
+                      <p className="text-gray-600 group-hover:text-blue-600 transition-colors text-lg font-medium mb-2">
                         ফিচার্ড ইমেজ যোগ করুন
                       </p>
                       <p className="text-sm text-gray-400 mb-1">
@@ -416,7 +424,7 @@ export default function CreateArticlePage() {
                       onChange={(e) =>
                         handleInputChange("category", e.target.value)
                       }
-                      className="w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
+                      className="w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
                     >
                       <option value="">বিভাগ নির্বাচন করুন</option>
                       {categories.map((category) => (
@@ -459,7 +467,7 @@ export default function CreateArticlePage() {
                       onChange={(e) => setTagInput(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleAddTag()}
                       placeholder="ট্যাগ যোগ করুন..."
-                      className="flex-1 w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
+                      className="flex-1 w-full px-5 py-2 border border-gray-200 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-md font-normal placeholder-gray-400"
                     />
                     <motion.button
                       onClick={handleAddTag}
@@ -579,6 +587,80 @@ export default function CreateArticlePage() {
               </motion.div>
             </div>
           </div>
+
+          {/* Action Buttons */}
+          <motion.div
+            className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm mt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.6, duration: 0.6 }}
+          >
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="text-sm text-gray-600">
+                {isFormValid ? (
+                  <span className="text-green-600 font-medium">
+                    ✓ ফর্মটি সঠিকভাবে পূরণ করা হয়েছে
+                  </span>
+                ) : (
+                  <span className="text-red-600 font-medium">
+                    ✗ অনুগ্রহ করে সমস্ত আবশ্যক ক্ষেত্র পূরণ করুন
+                  </span>
+                )}
+              </div>
+              <div className="flex space-x-4">
+                <motion.button
+                  onClick={() => handleSubmit("draft")}
+                  disabled={!isFormValid || isSubmitting}
+                  className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 ${
+                    isFormValid && !isSubmitting
+                      ? "bg-amber-500 text-white hover:bg-amber-600 shadow-lg"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+                  whileHover={
+                    isFormValid && !isSubmitting ? { scale: 1.05 } : {}
+                  }
+                  whileTap={isFormValid && !isSubmitting ? { scale: 0.95 } : {}}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      সংরক্ষণ হচ্ছে...
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <Save className="w-4 h-4 mr-2" />
+                      খসড়া হিসেবে সংরক্ষণ
+                    </div>
+                  )}
+                </motion.button>
+                <motion.button
+                  onClick={() => handleSubmit("published")}
+                  disabled={!isFormValid || isSubmitting}
+                  className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 ${
+                    isFormValid && !isSubmitting
+                      ? "bg-green-600 text-white hover:bg-green-700 shadow-lg"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+                  whileHover={
+                    isFormValid && !isSubmitting ? { scale: 1.05 } : {}
+                  }
+                  whileTap={isFormValid && !isSubmitting ? { scale: 0.95 } : {}}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      প্রকাশ হচ্ছে...
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <Send className="w-4 h-4 mr-2" />
+                      প্রকাশ করুন
+                    </div>
+                  )}
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </ReporterLayout>

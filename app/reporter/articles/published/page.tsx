@@ -119,7 +119,7 @@ export default function PublishedPage() {
       <div className="min-h-screen bg-gray-50">
         {/* Welcome Header */}
         <motion.div
-          className="relative overflow-hidden bg-linear-to-r from-red-500 via-red-600 to-red-700 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 p-4 sm:p-6 lg:p-8 text-white shadow-lg"
+          className="relative overflow-hidden bg-linear-to-r from-red-500 to-red-600 rounded-lg mx-4 sm:mx-6 lg:mx-8 mt-6 sm:mt-8 mb-6 sm:mb-8 p-4 sm:p-6 lg:p-8 text-white shadow-lg"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -159,7 +159,7 @@ export default function PublishedPage() {
                 >
                   <Link
                     href="/reporter/analytics"
-                    className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-red-600 rounded-lg hover:bg-red-50 transition-all shadow-lg font-semibold text-sm sm:text-base"
+                    className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-red-600 rounded-lg hover:bg-gray-50 transition-all shadow-lg font-semibold text-sm sm:text-base"
                   >
                     <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     বিস্তারিত অ্যানালিটিক্স
@@ -252,7 +252,7 @@ export default function PublishedPage() {
             </div>
 
             {/* Filters */}
-            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-100 shadow-sm transition-all duration-300">
               <div className="flex flex-col gap-3 sm:gap-4">
                 {/* Search */}
                 <div className="flex-1 relative">
@@ -262,7 +262,7 @@ export default function PublishedPage() {
                     placeholder="প্রকাশিত নিবন্ধ খুঁজুন..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent shadow-sm text-sm sm:text-base"
+                    className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm sm:text-base transition-all"
                   />
                 </div>
 
@@ -271,7 +271,7 @@ export default function PublishedPage() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as any)}
-                    className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent shadow-sm bg-white text-sm sm:text-base"
+                    className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm bg-white text-sm sm:text-base transition-all"
                   >
                     <option value="date">তারিখ অনুসারে</option>
                     <option value="views">ভিউ অনুসারে</option>
@@ -282,16 +282,16 @@ export default function PublishedPage() {
             </div>
 
             {/* Articles List */}
-            <div className="bg-white rounded-lg shadow border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-lg shadow border border-gray-100 overflow-hidden transition-all duration-300">
               <div className="divide-y divide-gray-200">
                 {filteredArticles.map((article, index) => (
                   <motion.div
                     key={article.id}
-                    className="p-4 sm:p-6 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
+                    className="p-4 sm:p-6 hover:bg-gray-50 transition-all duration-300 cursor-pointer hover:shadow-md"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    whileHover={{ scale: 1.01 }}
+                    whileHover={{ scale: 1.005 }}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
                       {/* Article Image */}
@@ -415,7 +415,12 @@ export default function PublishedPage() {
               </div>
 
               {filteredArticles.length === 0 && (
-                <div className="p-8 sm:p-12 text-center">
+                <motion.div
+                  className="p-8 sm:p-12 text-center transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                     কোনো প্রকাশিত নিবন্ধ নেই
@@ -432,12 +437,17 @@ export default function PublishedPage() {
                     <FileText className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     প্রথম নিবন্ধ লিখুন
                   </Link>
-                </div>
+                </motion.div>
               )}
             </div>
 
             {/* Performance Insights */}
-            <div className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-6">
+            <motion.div
+              className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-6 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
               <div className="flex items-center space-x-2 mb-4">
                 <TrendingUp className="w-5 h-5 text-blue-600" />
                 <h3 className="text-lg sm:text-xl font-semibold text-blue-900">
@@ -445,7 +455,10 @@ export default function PublishedPage() {
                 </h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200">
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     সেরা পারফর্মার
                   </h4>
@@ -455,8 +468,11 @@ export default function PublishedPage() {
                       "কোনো নিবন্ধ নেই"}
                     " - {articles[0]?.views || 0} ভিউ
                   </p>
-                </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200">
+                </motion.div>
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     গড় ভিউ
                   </h4>
@@ -467,8 +483,11 @@ export default function PublishedPage() {
                       : 0}{" "}
                     ভিউ
                   </p>
-                </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 sm:col-span-2 lg:col-span-1">
+                </motion.div>
+                <motion.div
+                  className="bg-white p-3 sm:p-4 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-300 sm:col-span-2 lg:col-span-1"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <h4 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
                     এনগেজমেন্ট রেট
                   </h4>
@@ -478,9 +497,9 @@ export default function PublishedPage() {
                       : 0}
                     % মন্তব্য রেট
                   </p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
