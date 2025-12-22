@@ -4,45 +4,45 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import {
-  authenticateUser,
-  getDashboardRoute,
-  demoUsers,
-  getRoleDisplayName,
-} from "@/lib/auth";
-import { ClientSession } from "@/lib/session";
+import { getDashboardRoute, demoUsers, getRoleDisplayName } from "@/lib/auth";
 import { LoginCredentials } from "@/types";
+import { useAuth } from "@/redux/hooks/useAuth";
 
 export default function LoginClient() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { login, isLoading } = useAuth();
 
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginCredentials>();
+    formState: { errors },
+  } = useForm<LoginCredentials>({
+    defaultValues: {
+      email: "superadmin@gmail.com",
+      password: "14701470",
+    },
+  });
 
   const onSubmit = async (data: LoginCredentials) => {
     console.log("Login attempt with data:", data);
     setError("");
 
     try {
-      const response = await authenticateUser(data);
-
-      if (response.success && response.user) {
-        console.log("Login successful for user:", response.user);
-        ClientSession.setSession(response.user as any, response.token || "");
-        const dashboardRoute = getDashboardRoute(response.user.role);
-        window.location.href = dashboardRoute;
+      const result = await login(data).unwrap();
+      console.log("Login result:", result);
+      if (result.success) {
+        console.log("Login successful");
+        window.location.href = "/admin/dashboard";
       } else {
-        console.error("Login failed:", response.message);
-        setError(response.message || "Login failed");
+        setError(result.message || "Login failed");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Login error:", err);
-      setError("An error occurred during login");
+      const errorMessage =
+        err?.data?.message || err?.error ;
+      setError(errorMessage);
     }
   };
 
@@ -144,10 +144,10 @@ export default function LoginClient() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isLoading}
                 className="w-full bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {isSubmitting ? "Logging in..." : "Login"}
+                {isLoading ? "Logging in..." : "Login"}
               </button>
             </form>
 

@@ -1,11 +1,10 @@
 "use client";
 
-import { AdminLayout } from "@/components/admin/layout";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const AdminLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
+const ReporterLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
@@ -16,10 +15,10 @@ const AdminLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
   }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    return null; 
+    return null; // or a loading spinner
   }
 
-  return <AdminLayout>{children}</AdminLayout>;
+  return <>{children}</>;
 };
 
-export default AdminLayoutWrapper;
+export default ReporterLayout;
