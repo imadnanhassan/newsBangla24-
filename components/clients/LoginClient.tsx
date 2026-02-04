@@ -4,14 +4,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { getDashboardRoute, demoUsers, getRoleDisplayName } from "@/lib/auth";
+import { demoUsers, getRoleDisplayName, authenticateUser, getDashboardRoute } from "@/lib/auth";
 import { LoginCredentials } from "@/types";
-import { useAuth } from "@/redux/hooks/useAuth";
 
 export default function LoginClient() {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { login, isLoading } = useAuth();
 
   const {
     register,
@@ -20,29 +19,30 @@ export default function LoginClient() {
     formState: { errors },
   } = useForm<LoginCredentials>({
     defaultValues: {
-      email: "superadmin@gmail.com",
-      password: "14701470",
+      email: "",
+      password: "",
     },
   });
 
   const onSubmit = async (data: LoginCredentials) => {
-    console.log("Login attempt with data:", data);
     setError("");
+    setIsLoading(true);
 
     try {
-      const result = await login(data).unwrap();
-      console.log("Login result:", result);
-      if (result.success) {
-        console.log("Login successful");
-        window.location.href = "/admin/dashboard";
+      const result = await authenticateUser(data);
+      
+      if (result.success && result.user) {
+        // Redirect to appropriate dashboard based on role
+        const dashboardRoute = getDashboardRoute(result.user.role);
+        window.location.href = dashboardRoute;
       } else {
         setError(result.message || "Login failed");
       }
     } catch (err: any) {
       console.error("Login error:", err);
-      const errorMessage =
-        err?.data?.message || err?.error ;
-      setError(errorMessage);
+      setError("An error occurred during login");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -200,10 +200,10 @@ export default function LoginClient() {
 
             <div className="mt-6 text-center">
               <Link
-                href="/test-auth"
+                href="/dashboard"
                 className="text-sm text-red-600 hover:text-red-700"
               >
-                System Test
+                Go to Dashboard
               </Link>
             </div>
           </div>
